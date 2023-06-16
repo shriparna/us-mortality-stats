@@ -43,3 +43,7 @@ Step 6: Testing
 Step 7: README
 Step 8: Presentation Slides
 Step 9: Practice Presentation
+
+BONUS! (heat maps??)
+Insurance coverage rates by state
+Adjusted annual income by state
