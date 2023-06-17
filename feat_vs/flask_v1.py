@@ -1,23 +1,24 @@
 # Import the dependencies.
-from flask import Flask, jsonify
+from flask import Flask
 from pymongo import MongoClient
-from pprint import pprint
-from bson.json_util import dumps, loads
+from bson.json_util import dumps
+import json
 
 #################################################
 # Flask Setup
 #################################################
 app = Flask(__name__)
+# app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 
 #################################################
-# Flask Routes
+# Root endpoint
 #################################################
 @app.route("/")
 def welcome():
     """List all available routes."""
     return(f"Welcome to the Home Page, Traveler!<br/>"
            f"-----------------------------------<br/>"
-           f"Route: /api/v1.0/state")
+           f"States: /api/v1.0/state")
 
 #################################################
 # Route one
@@ -28,7 +29,10 @@ def get_state(state):
     db = client.health
     mortality = db.mortality
     query = {"State":state}
-    return dumps(list(mortality.find(query)))
+    result = list(mortality.find(query))
+    return json.loads(dumps(result))
+    # return current_app.response_class(dumps(result),mimetype="application/json")
+    # return dumps(mortality.find(query))
     
 # Debug mode
 if __name__ == "__main__":
