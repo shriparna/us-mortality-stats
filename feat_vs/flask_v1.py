@@ -1,5 +1,5 @@
 # Import the dependencies.
-from flask import Flask
+from flask import Flask, render_template
 from pymongo import MongoClient
 from bson.json_util import dumps
 import json
@@ -7,7 +7,7 @@ import json
 #################################################
 # Flask Setup
 #################################################
-app = Flask(__name__)
+app = Flask(__name__,static_url_path='')
 # app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 
 #################################################
@@ -18,7 +18,8 @@ def welcome():
     """List all available routes."""
     return(f"Welcome to the Home Page, Traveler!<br/>"
            f"-----------------------------------<br/>"
-           f"States: /api/v1.0/state")
+           f"States: /api/v1.0/state<br/>"
+           f"HMTL: /api/v1.0/index")
 
 #################################################
 # Route one
@@ -33,7 +34,14 @@ def get_state(state):
     return json.loads(dumps(result))
     # return current_app.response_class(dumps(result),mimetype="application/json")
     # return dumps(mortality.find(query))
-    
+
+#################################################
+# Route two
+#################################################
+@app.route("/api/v1.0/index/")
+def page():
+    return render_template("index.html")
+
 # Debug mode
 if __name__ == "__main__":
     app.run(debug=True)
