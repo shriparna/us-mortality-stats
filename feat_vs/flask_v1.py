@@ -46,8 +46,8 @@ def page():
     query = {"Cause Name":"Unintentional injuries",
              "Year":2017}
     result = list(mortality.find(query).sort("State",1))
-    deaths = [x["State"] for x in result]
-    return render_template("index.html",data=deaths)
+    states = [x["State"] for x in result]
+    return render_template("index.html",data=states)
 
 # Debug mode
 if __name__ == "__main__":
