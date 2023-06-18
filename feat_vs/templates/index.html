@@ -6,9 +6,19 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Belly Button Biodiversity Dashboard</h1>
+    <h1>United States Mortality Dashboard</h1>
+    <div id="add_item">
+        <form action="/api/v1.0/index/" method="POST">
+            <select name="selct_items">
+                {% for x in data %}
+                <option value="{{ x }}">{{ x }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
     <div id="bar"></div>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>
+<!-- {{ url_for('static', filename='js/app.js') }} -->
