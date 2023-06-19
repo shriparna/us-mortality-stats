@@ -6,13 +6,39 @@
     <title>Document</title>
 </head>
 <body>
-    <h1></h1>
-    <h2></h2>
-    <div id="choose_state"></div>
-    <div id="bar"></div>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-12 jumbotron text-center">
+            <h1>United States Mortality Dashboard</h1>
+            <p>Use the interactive charts below to explore the dataset</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <div class="well">
+              <h5>Pick a State from the dropdown menu</h5>
+              <select id="selDataset" onchange="optionChanged(this.value)">
+                {% for x in data %}
+                <option value="{{ x }}">{{ x }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div id="bar"></div>
+          </div>
+          <div class="col-md-5">
+            <div id="line"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div id="map"></div>
+          </div>
+        </div>
+      </div>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script> const states_list = {{ data|tojson }} </script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>
