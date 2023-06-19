@@ -73,8 +73,9 @@ def get_bar_data():
     db = client.health
     mortality = db.mortality
     query = {"State":"Alabama",
-             "Year":2017}
-    result = list(mortality.find(query))
+             "Year":2017,
+             "Cause Name":{"$not":{"$in":["All causes"]}}}
+    result = list(mortality.find(query).sort("Deaths",1))
     return json.loads(dumps(result))
 
 # Debug mode
