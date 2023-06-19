@@ -19,7 +19,12 @@
             <div class="well">
               <h5>Pick a State from the dropdown menu</h5>
               <select id="selDataset" onchange="optionChanged(this.value)">
-                {% for x in data %}
+                {% for x in data[0] %}
+                <option value="{{ x }}">{{ x }}</option>
+                {% endfor %}
+              </select>
+              <select id="selYear" onchange="yearChanged(this.value)">
+                {% for x in data[1] %}
                 <option value="{{ x }}">{{ x }}</option>
                 {% endfor %}
               </select>
