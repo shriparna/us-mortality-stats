@@ -20,10 +20,12 @@ def welcome():
            f"-----------------------------------<br/>"
            f"States: /api/v1.0/state<br/>"
            f"HMTL: /api/v1.0/index/<br/>"
-           f"Data: /api/v1.0/states_list")
+           f"Data: /api/v1.0/states_list<br/>"
+           f"Years: /api/v1.0/years_list<br/>"
+           f"Bar Data: /api/v1.0/bar_data/state/year")
 
 #################################################
-# Route one
+# State data endpoint
 #################################################
 @app.route("/api/v1.0/<state>")
 def get_state(state):
@@ -37,7 +39,7 @@ def get_state(state):
     # return dumps(mortality.find(query))
 
 #################################################
-# Route two
+# Render HTML
 #################################################
 @app.route("/api/v1.0/index/")
 def page():
@@ -47,11 +49,20 @@ def page():
     query = {"Cause Name":"Unintentional injuries",
              "Year":2017}
     result = list(mortality.find(query).sort("State",1))
+
+    query2 = {"Cause Name":"Unintentional injuries",
+              "State":"Alabama"}
+    result2 = list(mortality.find(query2).sort("Year",-1))
+    
     states = [x["State"] for x in result]
-    return render_template("index.html",data=states)
+    years = [x["Year"] for x in result2]
+
+    data1 = [states,years]
+
+    return render_template("index.html",data=data1)
 
 #################################################
-# Data endpoint
+# States list endpoint
 #################################################
 @app.route("/api/v1.0/states_list")
 def geo_code():
@@ -65,15 +76,29 @@ def geo_code():
     return states
 
 #################################################
-# Bar data endpoint
+# Years list endpoint
 #################################################
-@app.route("/api/v1.0/bar_data")
-def get_bar_data():
+@app.route("/api/v1.0/years_list")
+def get_years():
     client = MongoClient(port=27017)
     db = client.health
     mortality = db.mortality
-    query = {"State":"Alabama",
-             "Year":2017,
+    query = {"Cause Name":"Unintentional injuries",
+             "State":"Alabama"}
+    result = list(mortality.find(query).sort("Year",-1))
+    years = [x["Year"] for x in result]
+    return years
+
+#################################################
+# Bar data endpoint
+#################################################
+@app.route("/api/v1.0/bar_data/<state>/<year>")
+def get_bar_data(state,year):
+    client = MongoClient(port=27017)
+    db = client.health
+    mortality = db.mortality
+    query = {"State":state,
+             "Year":int(year),
              "Cause Name":{"$not":{"$in":["All causes"]}}}
     result = list(mortality.find(query).sort("Deaths",1))
     return json.loads(dumps(result))

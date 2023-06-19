@@ -1,21 +1,37 @@
-d3.json("/api/v1.0/states_list")
-.then(data =>
-{
-  for (x of data)
-  {
-    d3.select("#selDataset")
-    .append("option")
-    .attr("value",x)
-    .text(x)
-  }
-})
+// d3.json("/api/v1.0/states_list")
+// .then(data =>
+// {
+//   for (x of data)
+//   {
+//     d3.select("#selDataset")
+//     .append("option")
+//     .attr("value",x)
+//     .text(x)
+//   }
+// })
+
+// d3.json("/api/v1.0/years_list")
+// .then(data =>
+// {
+//   for (x of data)
+//   {
+//     d3.select("#selYear")
+//     .append("option")
+//     .attr("value",x)
+//     .text(x)
+//   }
+// })
 
 function drawBars()
 {
-  d3.json("/api/v1.0/bar_data")
+  let state = d3.select("#selDataset").node().value
+  let year = d3.select("#selYear").node().value
+  console.log(state)
+  console.log(year)
+
+  d3.json(`/api/v1.0/bar_data/${state}/${year}`)
   .then(data =>
   {
-    console.log(data)
     let causeArray = []
     let deathArray = []
     for (x of data)
@@ -35,7 +51,7 @@ function drawBars()
 
     let barlayout =
     {
-      title:`${data[0]["State"]} Age-adjusted Death Rate by Cause Name`,
+      title:`${data[0]["State"]} Age-adjusted Death Rate by Cause Name for ${data[1]["Year"]}`,
       yaxis:
       {
         automargin:true
@@ -49,9 +65,14 @@ function drawBars()
   })
 }
 
-drawBars()
+drawBars("Alabama",2017)
 
-function optionChanged()
+function optionChanged(state)
+{
+  drawBars()
+}
+
+function yearChanged(year)
 {
   drawBars()
 }
