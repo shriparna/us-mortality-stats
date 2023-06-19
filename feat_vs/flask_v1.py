@@ -19,7 +19,8 @@ def welcome():
     return(f"Welcome to the Home Page, Traveler!<br/>"
            f"-----------------------------------<br/>"
            f"States: /api/v1.0/state<br/>"
-           f"HMTL: /api/v1.0/index/")
+           f"HMTL: /api/v1.0/index/<br/>"
+           f"Data: /api/v1.0/states_list")
 
 #################################################
 # Route one
@@ -48,6 +49,33 @@ def page():
     result = list(mortality.find(query).sort("State",1))
     states = [x["State"] for x in result]
     return render_template("index.html",data=states)
+
+#################################################
+# Data endpoint
+#################################################
+@app.route("/api/v1.0/states_list")
+def geo_code():
+    client = MongoClient(port=27017)
+    db = client.health
+    mortality = db.mortality
+    query = {"Cause Name":"Unintentional injuries",
+             "Year":2017}
+    result = list(mortality.find(query).sort("State",1))
+    states = [x["State"] for x in result]
+    return states
+
+#################################################
+# Bar data endpoint
+#################################################
+@app.route("/api/v1.0/bar_data")
+def get_bar_data():
+    client = MongoClient(port=27017)
+    db = client.health
+    mortality = db.mortality
+    query = {"State":"Alabama",
+             "Year":2017}
+    result = list(mortality.find(query))
+    return json.loads(dumps(result))
 
 # Debug mode
 if __name__ == "__main__":
