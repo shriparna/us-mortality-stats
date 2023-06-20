@@ -1,1 +1,0 @@
-d3.json("stats.json").then(data => console.log(data))
