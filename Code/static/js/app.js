@@ -52,3 +52,54 @@ function yearChanged(year)
 {
   drawBars()
 }
+
+function drawEbars()
+{
+  let state = d3.select("#selDataset").node().value
+  let year = d3.select("#selYear").node().value
+
+  d3.json(`/api/v1.0/bar_data/${state}/${year}`)
+  .then(data =>
+  {
+    let causeArray = []
+    let deathArray = []
+    for (x of data)
+    {
+      causeArray.push(x["Cause Name"])
+      deathArray.push(x["Age-adjusted Death Rate"])
+    }
+    
+  let dom = document.getElementById("chart-container");
+  let myChart = echarts.init(dom, null, {
+    renderer: 'canvas',
+    useDirtyRect: false
+  })
+  let app = {}
+
+  let option
+
+  option = {
+    xAxis: {
+      type: 'category',
+      data: causeArray
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        data: deathArray,
+        type: 'bar'
+      }
+    ]
+  }
+
+  if (option && typeof option === 'object') {
+    myChart.setOption(option)
+  }
+
+  window.addEventListener('resize', myChart.resize)
+  })
+}
+
+drawEbars()
