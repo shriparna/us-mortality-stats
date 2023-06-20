@@ -1,27 +1,3 @@
-// d3.json("/api/v1.0/states_list")
-// .then(data =>
-// {
-//   for (x of data)
-//   {
-//     d3.select("#selDataset")
-//     .append("option")
-//     .attr("value",x)
-//     .text(x)
-//   }
-// })
-
-// d3.json("/api/v1.0/years_list")
-// .then(data =>
-// {
-//   for (x of data)
-//   {
-//     d3.select("#selYear")
-//     .append("option")
-//     .attr("value",x)
-//     .text(x)
-//   }
-// })
-
 function drawBars()
 {
   let state = d3.select("#selDataset").node().value
