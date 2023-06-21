@@ -82,19 +82,23 @@ function drawEbars()
 
   option = {
     title: {
-      text:"Death Rate by State by Year",
+      text:`${data[0]["State"]} Age-adjusted Death Rate by Cause Name for ${data[1]["Year"]}`,
+      left: "center"
     },
     grid:{
       containLabel:true,
       tooltip:{
         axisPointer:{
           label:{
-            show:true,
-            position:"top",
-            formatter:"{c}"
+            show:true
           }
         }
       }
+    },
+    tooltip:{
+      show:true,
+      trigger:'axis',
+      formatter:'{c}',
     },
     xAxis: {
       type: 'value',
@@ -112,7 +116,8 @@ function drawEbars()
     series: [
       {
         data:deathArray,
-        type:"bar"
+        type:"bar",
+        itemStyle : { normal: {label : {show: true, position: 'right', color:'#ffffff'}}},
       }
     ]
   }
