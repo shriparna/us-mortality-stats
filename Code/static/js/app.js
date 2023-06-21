@@ -112,7 +112,8 @@ function drawEbars()
     series: [
       {
         data:deathArray,
-        type:"bar"
+        type:"bar",
+        itemStyle : { normal: {label : {show: true, position: 'right', color:'#ffffff'}}},
       }
     ]
   }
