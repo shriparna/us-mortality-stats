@@ -70,7 +70,7 @@ li {
 .headerContainer {
     display: flex;
     flex-direction: column;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/medical_bottles.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../../images/medical_bottles.jpg");
     min-height: 45em;
     height: 100%;
     align-self: center;
