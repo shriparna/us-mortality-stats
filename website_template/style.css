@@ -40,8 +40,11 @@ li {
     display: inline-block;
     padding-inline: 15px;
     font-size: 18px;
+<<<<<<< HEAD
     text-decoration-line: none;
     text-decoration-color: #8a8787;
+=======
+>>>>>>> 30e38638ca08ee24a444d9f21f46a1e2f912e855
 }
 
 .topnav {
