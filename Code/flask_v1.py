@@ -2,7 +2,6 @@
 from flask import Flask, render_template
 from pymongo import MongoClient
 from bson.json_util import dumps
-import json
 
 def get_from_mongo():
     client = MongoClient(port=27017)
@@ -36,8 +35,10 @@ def welcome():
 @app.route("/api/v1.0/<state>")
 def get_state(state):
     query = {"State":state}
-    result = list(get_from_mongo().find(query))
-    return json.loads(dumps(result))
+    result = get_from_mongo().find(query)
+    return dumps(result)
+    # result = list(get_from_mongo().find(query))
+    # return json.loads(dumps(result))
     # return current_app.response_class(dumps(result),mimetype="application/json")
     # return dumps(mortality.find(query))
 
@@ -68,7 +69,7 @@ def page():
 def geo_code():
     query = {"Cause Name":"Unintentional injuries",
              "Year":2017}
-    result = list(get_from_mongo().find(query).sort("State",1))
+    result = get_from_mongo().find(query).sort("State",1)
     states = [x["State"] for x in result]
     return states
 
@@ -79,7 +80,7 @@ def geo_code():
 def get_years():
     query = {"Cause Name":"Unintentional injuries",
              "State":"Alabama"}
-    result = list(get_from_mongo().find(query).sort("Year",-1))
+    result = get_from_mongo().find(query).sort("Year",-1)
     years = [x["Year"] for x in result]
     return years
 
@@ -91,8 +92,8 @@ def get_bar_data(state,year):
     query = {"State":state,
              "Year":int(year),
              "Cause Name":{"$not":{"$in":["All causes"]}}}
-    result = list(get_from_mongo().find(query).sort("Deaths",1))
-    return json.loads(dumps(result))
+    result = get_from_mongo().find(query).sort("Deaths",1)
+    return dumps(result)
 
 # Debug mode
 if __name__ == "__main__":
