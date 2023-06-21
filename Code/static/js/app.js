@@ -82,7 +82,7 @@ function drawEbars()
 
   option = {
     title: {
-      text:"Death Rate by State by Year",
+      text:`${data[0]["State"]} Age-adjusted Death Rate by Cause Name for ${data[1]["Year"]}`,
     },
     grid:{
       containLabel:true,
@@ -100,7 +100,7 @@ function drawEbars()
       type: 'value',
       name:"Age-adjusted Death Rate",
       nameLocation:"center",
-      alignTicks:"true"
+      alignTicks:"true",
     },
     yAxis: {
       type: 'category',

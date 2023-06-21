@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<title>US Mortality Rates</title>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,17 +21,17 @@
       <h1>United States Mortality Rates</h1>
       <h3>What are the deadliest diseases of your state?</h3>
     </div>
-    <h2>Data</h2>
     <div class="container">
         <div class="row">
           <div class="col-md-12 jumbotron text-center">
+            <h2>Data</h2>
             <p>Use the interactive charts below to explore the dataset</p>
           </div>
         </div>
         <div class="row">
           <div class="col-md-2">
             <div class="well">
-              <h5>Pick a State from the dropdown menu</h5>
+              <h5>Pick a State and Year from the dropdown menu</h5>
               <select id="selDataset" onchange="optionChanged(this.value)">
                 {% for x in data[0] %}
                 <option value="{{ x }}">{{ x }}</option>
@@ -50,41 +51,36 @@
             <div id="chart-container"></div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div id="map"></div>
-          </div>
-        </div>
       </div>
+      <div id="map"></div>
     <section class="aboutContainer">
       <h2 class="aboutUsText">About Us</h2>
       <p class="aboutUsText">We are a group of students from the Data Analytics course provided by the University of California, Berkeley Extension program and edX. We chose this project because...<i>why did we chose this project guys? What's a good reason to put here?</i></p>
       <ul>
-          <li><a href="https://github.com/AbousamraEd" target="_blank" rel="noopener noreferrer" style="color:#8a8787">Ahmed Abousamra</a></li>
-          <li><a href="https://github.com/shriparna" target="_blank" rel="noopener noreferrer" style="color:#8a8787">Shridhar Kamat</a></li>
-          <li><a href="https://github.com/CiciRose" target="_blank" rel="noopener noreferrer" style="color:#8a8787">Cecilia Rosete</a></li>
-          <li><a href="https://github.com/sncrsenyurt" target="_blank" rel="noopener noreferrer" style="color:#8a8787">Irfan Senyurt</a></li>
-          <li><a href="https://github.com/VinnyShankar" target="_blank" rel="noopener noreferrer" style="color:#8a8787">Vinayak Shankar</a></li>
-          <li><a href="https://github.com/Nolan-Tonthat" target="_blank" rel="noopener noreferrer" style="color:#8a8787">Nolan Tonthat</a></li>
+          <li><a href="https://github.com/AbousamraEd" target="_blank" rel="noopener noreferrer" color="#acacac">Ahmed Abousamra</a></li>
+          <li><a href="https://github.com/shriparna" target="_blank" rel="noopener noreferrer">Shridhar Kamat</a></li>
+          <li><a href="https://github.com/CiciRose" target="_blank" rel="noopener noreferrer">Cecilia Rosete</a></li>
+          <li><a href="https://github.com/sncrsenyurt" target="_blank" rel="noopener noreferrer">Irfan Senyurt</a></li>
+          <li><a href="https://github.com/VinnyShankar" target="_blank" rel="noopener noreferrer">Vinayak Shankar</a></li>
+          <li><a href="https://github.com/Nolan-Tonthat" target="_blank" rel="noopener noreferrer">Nolan Tonthat</a></li>
       </ul>
     </section>
     <h2>Sources</h2>
-        <ul>
-            <li><a href="https://www.cdc.gov/nchs/data-visualization/mortality-leading-causes/index.htm" target="_blank" rel="noopener noreferrer" style="color:#8a8787">CDC National Center for Health Statistics</a></li>
-            <li><a href="https://fonts.google.com/" target="_blank" rel="noopener noreferrer" style="color:#8a8787">Google Fonts</a></li>
-            <li><a href="https://unsplash.com/photos/KMvoHcB-w5g" target="_blank" rel="noopener noreferrer" style="color:#8a8787">Background Image</a></li>
-        </ul>
+    <ul>
+        <li><a href="https://www.cdc.gov/nchs/data-visualization/mortality-leading-causes/index.htm" target="_blank" rel="noopener noreferrer">CDC National Center for Health Statistics</a></li>
+        <li><a href="https://fonts.google.com/" target="_blank" rel="noopener noreferrer">Google Fonts</a></li>
+        <li><a href="https://unsplash.com/photos/KMvoHcB-w5g" target="_blank" rel="noopener noreferrer">Background Image</a></li>
+    </ul>
     <script src="https://fastly.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>  
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
-<footer>
+<!-- <footer>
     <section class="footerContainer">
         <img src="../images/ucb_logo.PNG">
         <img src="../images/edx_logo.PNG">
         <img src="../images/cdc_logo.PNG">
     </section>
-</footer>
+</footer> -->
 </html>
 <!-- {{ url_for('static', filename='js/app.js') }} -->
