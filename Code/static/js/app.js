@@ -1,44 +1,44 @@
 function drawBars()
 {
-  let state = d3.select("#selDataset").node().value
-  let year = d3.select("#selYear").node().value
-  console.log(state)
-  console.log(year)
+  // let state = d3.select("#selDataset").node().value
+  // let year = d3.select("#selYear").node().value
+  // console.log(state)
+  // console.log(year)
 
-  d3.json(`/api/v1.0/bar_data/${state}/${year}`)
-  .then(data =>
-  {
-    let causeArray = []
-    let deathArray = []
-    for (x of data)
-    {
-      causeArray.push(x["Cause Name"])
-      deathArray.push(x["Age-adjusted Death Rate"])
-    }
-    console.log(causeArray)
-    console.log(deathArray)
-    let trace1 =
-    {
-      x:deathArray,
-      y:causeArray,
-      type:"bar",
-      orientation:"h"
-    }
+  // d3.json(`/api/v1.0/bar_data/${state}/${year}`)
+  // .then(data =>
+  // {
+  //   let causeArray = []
+  //   let deathArray = []
+  //   for (x of data)
+  //   {
+  //     causeArray.push(x["Cause Name"])
+  //     deathArray.push(x["Age-adjusted Death Rate"])
+  //   }
+  //   console.log(causeArray)
+  //   console.log(deathArray)
+  //   let trace1 =
+  //   {
+  //     x:deathArray,
+  //     y:causeArray,
+  //     type:"bar",
+  //     orientation:"h"
+  //   }
 
-    let barlayout =
-    {
-      title:`${data[0]["State"]} Age-adjusted Death Rate by Cause Name for ${data[1]["Year"]}`,
-      yaxis:
-      {
-        automargin:true
-      }
-    }
+  //   let barlayout =
+  //   {
+  //     title:`${data[0]["State"]} Age-adjusted Death Rate by Cause Name for ${data[1]["Year"]}`,
+  //     yaxis:
+  //     {
+  //       automargin:true
+  //     }
+  //   }
 
-    let bardata = [trace1]
+  //   let bardata = [trace1]
 
-    Plotly.newPlot("bar",bardata,barlayout)
+  //   Plotly.newPlot("bar",bardata,barlayout)
 
-  })
+  // })
 }
 
 drawBars("Alabama",2017)
@@ -82,7 +82,12 @@ function drawEbars()
 
   option = {
     title: {
-      text:"Death Rate by State by Year",
+      text:`${data[0]["State"]} Age-adjusted Death Rate by Cause Name for ${data[1]["Year"]}`,
+      textAlign:"auto",
+      left:"center",
+      textStyle:{
+        color:"#edf2fb"
+      }
     },
     grid:{
       containLabel:true,
@@ -100,21 +105,37 @@ function drawEbars()
       type: 'value',
       name:"Age-adjusted Death Rate",
       nameLocation:"center",
-      alignTicks:"true"
+      alignTicks:"true",
+      axisLabel:{
+        textStyle:{
+          color:"#edf2fb"
+        }
+      }
     },
     yAxis: {
       type: 'category',
       data:causeArray,
       axisTick:{
         alignWithLabel:true
+      },
+      axisLabel:{
+        textStyle:{
+          color:"#edf2fb"
+        }
       }
     },
     series: [
       {
         data:deathArray,
-        type:"bar"
+        type:"bar",
+        itemStyle : { normal: {label : {show: true, position: 'right', color:'#FFFFFF'}}}
       }
-    ]
+    ],
+    axisTick:{
+      lineStyle:{
+        color:"white"
+      }
+    }
   }
 
   if (option && typeof option === 'object') {
