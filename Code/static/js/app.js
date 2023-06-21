@@ -46,11 +46,13 @@ drawBars("Alabama",2017)
 function optionChanged(state)
 {
   drawBars()
+  drawEbars()
 }
 
 function yearChanged(year)
 {
   drawBars()
+  drawEbars()
 }
 
 function drawEbars()
@@ -79,17 +81,38 @@ function drawEbars()
   let option
 
   option = {
+    title: {
+      text:"Death Rate by State by Year",
+    },
+    grid:{
+      containLabel:true,
+      tooltip:{
+        axisPointer:{
+          label:{
+            show:true,
+            position:"top",
+            formatter:"{c}"
+          }
+        }
+      }
+    },
     xAxis: {
-      type: 'category',
-      data: causeArray
+      type: 'value',
+      name:"Age-adjusted Death Rate",
+      nameLocation:"center",
+      alignTicks:"true"
     },
     yAxis: {
-      type: 'value'
+      type: 'category',
+      data:causeArray,
+      axisTick:{
+        alignWithLabel:true
+      }
     },
     series: [
       {
-        data: deathArray,
-        type: 'bar'
+        data:deathArray,
+        type:"bar"
       }
     ]
   }
