@@ -1,5 +1,5 @@
 # Dependencies
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from pymongo import MongoClient
 from bson.json_util import dumps
 
@@ -30,13 +30,27 @@ def welcome():
            f"Bar Data: /api/v1.0/bar_data/state/year")
 
 #################################################
+# Root endpoint
+#################################################
+@app.route("/api/v1.0/usJSON")
+def us_json():
+    client = MongoClient(port=27017)
+    db = client.health
+    states = db.states
+    query = {}
+    fields = {"_id":0}
+    result = states.find_one(query,fields)
+    return result
+
+#################################################
 # State data endpoint
 #################################################
 @app.route("/api/v1.0/<state>")
 def get_state(state):
     query = {"State":state}
-    result = get_from_mongo().find(query)
-    return dumps(result)
+    fields = {"_id":0}
+    result = list(get_from_mongo().find(query,fields))
+    return jsonify(result)
     # result = list(get_from_mongo().find(query))
     # return json.loads(dumps(result))
     # return current_app.response_class(dumps(result),mimetype="application/json")

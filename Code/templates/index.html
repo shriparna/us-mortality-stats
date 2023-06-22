@@ -7,7 +7,11 @@
     <title>Document</title>
     <link  rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
+      <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin="" />
 </head>
 <body>
     <div class="topnav">
@@ -20,6 +24,7 @@
       <h1>United States Mortality Rates</h1>
       <h3>What are the deadliest diseases of your state?</h3>
     </div>
+    <div id='myDiv'><!-- Choropleth --></div>
     <div class="container">
         <div class="row">
           <div class="col-md-12 jumbotron text-center">
@@ -43,15 +48,11 @@
             </div>
           </div>
           <div class="col-md-5">
-            <div id="bar"></div>
-          </div>
-          <div class="col-md-5">
             <div id="chart-container"></div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div id="map"></div>
           </div>
         </div>
       </div>
@@ -67,6 +68,9 @@
           <li><a href="https://github.com/Nolan-Tonthat" target="_blank" rel="noopener noreferrer">Nolan Tonthat</a></li>
       </ul>
     </section>
+    <!-- <script src='https://cdn.plot.ly/plotly-2.24.1.min.js'></script> -->
+    <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script> -->
+    <script src="https://fastly.jsdelivr.net/npm/jquery"></script>
     <script src="https://fastly.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>  
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
