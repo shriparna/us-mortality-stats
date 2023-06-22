@@ -96,10 +96,14 @@ function drawEbars()
           label:{
             show:true,
             position:"top",
-            formatter:"{c}"
           }
         }
       }
+    },
+    tooltip: {
+      formatter:"{c}",
+      show:true,
+      trigger:"axis",
     },
     xAxis: {
       type: 'value',
@@ -147,3 +151,10 @@ function drawEbars()
 }
 
 drawEbars()
+
+const map = L.map('map', {
+  center: [38,-100],
+  zoom: 4.45
+});
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' }).addTo(map);

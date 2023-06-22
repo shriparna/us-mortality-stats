@@ -1,3 +1,7 @@
+html{
+    scroll-behavior: smooth;;
+}
+
 body {
     color: #d7d9de;
     background-color: #1d1d1d;
@@ -117,7 +121,13 @@ a:hover, a:active {
 
 #chart-container {
     position: left;
-    height: 50vh;
+    height: 35vh;
+    width: 75vh;;
     overflow: hidden;
     padding-top: 15px;
+  }
+
+  #map {
+    width: 65vw;
+    height: 35vh;
   }

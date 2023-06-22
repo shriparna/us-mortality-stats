@@ -9,13 +9,15 @@
     <link  rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 </head>
 <body>
     <div class="topnav">
       <a class="active" href="#home">Home</a>
-      <a href="#news">Data</a>
-      <a href="#contact">About Us</a>
-      <a href="#about">Sources</a>
+      <a href="#data">Data</a>
+      <a href="#aboutus">About Us</a>
+      <a href="#sources">Sources</a>
     </div>
     <div class="headerContainer">
       <h1>United States Mortality Rates</h1>
@@ -24,7 +26,7 @@
     <div class="container">
         <div class="row">
           <div class="col-md-12 jumbotron text-center">
-            <h2>Data</h2>
+            <h2 id="data">Data</h2>
             <p>Use the interactive charts below to explore the dataset</p>
           </div>
         </div>
@@ -51,11 +53,11 @@
             <div id="chart-container"></div>
           </div>
         </div>
-      </div>
-      <div id="map"></div>
+    </div>
+    <div id="map"></div>
     <section class="aboutContainer">
-      <h2 class="aboutUsText">About Us</h2>
-      <p class="aboutUsText">We are a group of students from the Data Analytics course provided by the University of California, Berkeley Extension program and edX. We chose this project because...<i>why did we chose this project guys? What's a good reason to put here?</i></p>
+      <h2 class="aboutUsText" id="aboutus">About Us</h2>
+      <p class="aboutUsText">We are a group of students from the Data Analytics course provided by the University of California, Berkeley Extension program and edX.</p>
       <ul>
           <li><a href="https://github.com/AbousamraEd" target="_blank" rel="noopener noreferrer" color="#acacac">Ahmed Abousamra</a></li>
           <li><a href="https://github.com/shriparna" target="_blank" rel="noopener noreferrer">Shridhar Kamat</a></li>
@@ -65,7 +67,7 @@
           <li><a href="https://github.com/Nolan-Tonthat" target="_blank" rel="noopener noreferrer">Nolan Tonthat</a></li>
       </ul>
     </section>
-    <h2>Sources</h2>
+    <h2 id="sources">Sources</h2>
     <ul>
         <li><a href="https://www.cdc.gov/nchs/data-visualization/mortality-leading-causes/index.htm" target="_blank" rel="noopener noreferrer">CDC National Center for Health Statistics</a></li>
         <li><a href="https://fonts.google.com/" target="_blank" rel="noopener noreferrer">Google Fonts</a></li>
