@@ -111,6 +111,10 @@ a:hover, a:active {
     text-align: right;
 }
 
+.aboutUsList {
+    text-align: right;
+}
+
 .footerContainer {
     background-color: #ffffff;
     display: flex;
@@ -127,7 +131,7 @@ a:hover, a:active {
     padding-top: 15px;
   }
 
-  #map {
+#map {
     width: 65vw;
     height: 35vh;
   }

@@ -112,7 +112,8 @@ function drawEbars()
       alignTicks:"true",
       axisLabel:{
         textStyle:{
-          color:"#edf2fb"
+          color:"#acacac",
+
         }
       }
     },
