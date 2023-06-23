@@ -144,7 +144,10 @@ function drawMap()
         text: `USA Death Statistics (${year})`,
         subtext: 'Data from www.cdc.gov',
         sublink: 'https://www.cdc.gov/nchs/data-visualization/mortality-leading-causes/index.htm',
-        left: 'center'
+        left: 'center',
+        textStyle:{
+          color:"white"
+        }
       },
       tooltip: {
         trigger: 'item',
@@ -152,7 +155,7 @@ function drawMap()
         transitionDuration: 0.2
       },
       visualMap: {
-        left: 'right',
+        left: '70%',
         min: 600,
         max: 1000,
         inRange: {
@@ -171,7 +174,10 @@ function drawMap()
           ]
         },
         text: ['High', 'Low'],
-        calculable: true
+        calculable: true,
+        textStyle:{
+          color:"white"
+        }
       },
       toolbox: {
         show: true,
