@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>US Mortality Rates</title>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,32 +7,34 @@
     <title>Document</title>
     <link  rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
+      <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin="" />
 </head>
 <body>
     <div class="topnav">
       <a class="active" href="#home">Home</a>
-      <a href="#data">Data</a>
-      <a href="#aboutus">About Us</a>
-      <a href="#sources">Sources</a>
+      <a href="#news">Data</a>
+      <a href="#contact">About Us</a>
+      <a href="#about">Sources</a>
     </div>
     <div class="headerContainer">
       <h1>United States Mortality Rates</h1>
       <h3>What are the deadliest diseases of your state?</h3>
     </div>
+    <div id='myDiv'><!-- Choropleth --></div>
     <div class="container">
         <div class="row">
           <div class="col-md-12 jumbotron text-center">
-            <h2 id="data">Data</h2>
             <p>Use the interactive charts below to explore the dataset</p>
           </div>
         </div>
         <div class="row">
           <div class="col-md-2">
             <div class="well">
-              <h5>Pick a State and Year from the dropdown menu</h5>
+              <h5>Pick a State from the dropdown menu</h5>
               <select id="selDataset" onchange="optionChanged(this.value)">
                 {% for x in data[0] %}
                 <option value="{{ x }}">{{ x }}</option>
@@ -47,19 +48,19 @@
             </div>
           </div>
           <div class="col-md-5">
-            <div id="bar"></div>
-          </div>
-          <div class="col-md-5">
             <div id="chart-container"></div>
           </div>
         </div>
-    </div>
-    <div id="map"></div>
+        <div class="row">
+          <div class="col-md-12">
+          </div>
+        </div>
+      </div>
     <section class="aboutContainer">
-      <h2 class="aboutUsText" id="aboutus">About Us</h2>
-      <p class="aboutUsText">We are a group of students from the Data Analytics course provided by the University of California, Berkeley Extension program and edX.</p>
-      <ul  class="aboutUsList">
-          <li><a href="https://github.com/AbousamraEd" target="_blank" rel="noopener noreferrer" color="#acacac">Ahmed Abousamra</a></li>
+      <h2 class="aboutUsText">About Us</h2>
+      <p class="aboutUsText">We are a group of students from the Data Analytics course provided by the University of California, Berkeley Extension program and edX. We chose this project because...<i>why did we chose this project guys? What's a good reason to put here?</i></p>
+      <ul>
+          <li><a href="https://github.com/AbousamraEd" target="_blank" rel="noopener noreferrer">Ahmed Abousamra</a></li>
           <li><a href="https://github.com/shriparna" target="_blank" rel="noopener noreferrer">Shridhar Kamat</a></li>
           <li><a href="https://github.com/CiciRose" target="_blank" rel="noopener noreferrer">Cecilia Rosete</a></li>
           <li><a href="https://github.com/sncrsenyurt" target="_blank" rel="noopener noreferrer">Irfan Senyurt</a></li>
@@ -67,24 +68,20 @@
           <li><a href="https://github.com/Nolan-Tonthat" target="_blank" rel="noopener noreferrer">Nolan Tonthat</a></li>
       </ul>
     </section>
-    <h2 id="sources">Sources</h2>
-    <ul>
-        <li><a href="https://www.cdc.gov/nchs/data-visualization/mortality-leading-causes/index.htm" target="_blank" rel="noopener noreferrer">CDC National Center for Health Statistics</a></li>
-        <li><a href="https://echarts.apache.org/en/index.html" target="_blank" rel="noopener noreferrer">Apache ECharts</a></li>
-        <li><a href="https://leafletjs.com/" target="_blank" rel="noopener noreferrer">Leaflet</a></li>
-        <li><a href="https://fonts.google.com/" target="_blank" rel="noopener noreferrer">Google Fonts</a></li>
-        <li><a href="https://unsplash.com/photos/KMvoHcB-w5g" target="_blank" rel="noopener noreferrer">Background Image</a></li>
-    </ul>
+    <!-- <script src='https://cdn.plot.ly/plotly-2.24.1.min.js'></script> -->
+    <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script> -->
+    <script src="https://fastly.jsdelivr.net/npm/jquery"></script>
     <script src="https://fastly.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>  
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
-<footer>
+<!-- <footer>
     <section class="footerContainer">
         <img src="../images/ucb_logo.PNG">
         <img src="../images/edx_logo.PNG">
         <img src="../images/cdc_logo.PNG">
     </section>
-</footer>
+</footer> -->
 </html>
 <!-- {{ url_for('static', filename='js/app.js') }} -->
