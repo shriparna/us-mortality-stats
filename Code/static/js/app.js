@@ -6,6 +6,7 @@ function optionChanged(state)
 function yearChanged(year)
 {
   drawEbars()
+  drawEMap()
 }
 
 function drawEbars()
@@ -105,93 +106,97 @@ function drawEbars()
 
 drawEbars()
 
-var dom = document.getElementById('myDiv');
-var myChart = echarts.init(dom, null, {
-  renderer: 'canvas',
-  useDirtyRect: false
-});
-var app = {};
-// var ROOT_PATH = 'https://echarts.apache.org/examples';
-var option;
 
-myChart.showLoading();
-$.getJSON("/api/v1.0/usJSON", function (usaJson) {
-  d3.json("/api/v1.0/mapdata").then(mapdata => {
-  myChart.hideLoading();
-  echarts.registerMap('USA', usaJson, {
-    Alaska: {
-      left: -131,
-      top: 25,
-      width: 15
-    },
-    Hawaii: {
-      left: -110,
-      top: 28,
-      width: 5
-    },
-    'Puerto Rico': {
-      left: -76,
-      top: 26,
-      width: 2
-    }
-  });
-  option = {
-    title: {
-      text: 'USA Death Statistics (2017)',
-      subtext: 'Data from /www.cdc.gov',
-      sublink: 'https://www.cdc.gov/nchs/data-visualization/mortality-leading-causes/index.htm',
-      left: 'right'
-    },
-    tooltip: {
-      trigger: 'item',
-      showDelay: 0,
-      transitionDuration: 0.2
-    },
-    visualMap: {
-      left: 'right',
-      min: 4000,
-      max: 270000,
-      inRange: {
-        color: [
-          '#313695',
-          '#4575b4',
-          '#74add1',
-          '#abd9e9',
-          '#e0f3f8',
-          '#ffffbf',
-          '#fee090',
-          '#fdae61',
-          '#f46d43',
-          '#d73027',
-          '#a50026'
+function drawEMap()
+{
+ let year = d3.select("#selYear").node().value
+ let dom = document.getElementById('myDiv');
+ let myChart = echarts.init(dom, null, {
+   renderer: 'canvas',
+   useDirtyRect: false
+ });
+ let app = {};
+ // var ROOT_PATH = 'https://echarts.apache.org/examples';
+ let option;
+
+ myChart.showLoading();
+ $.getJSON("/api/v1.0/usJSON", function (usaJson) {
+   d3.json(`/api/v1.0/mapdata/${year}`).then(mapdata => {
+   myChart.hideLoading();
+   echarts.registerMap('USA', usaJson, {
+     Alaska: {
+       left: -131,
+       top: 25,
+       width: 15
+     },
+     Hawaii: {
+       left: -110,
+       top: 28,
+       width: 5
+     },
+     'Puerto Rico': {
+       left: -76,
+       top: 26,
+       width: 2
+     }
+   });
+   option = {
+     title: {
+       text: `USA Death Statistics (${year})`,
+       subtext: 'Data from /www.cdc.gov',
+       sublink: 'https://www.cdc.gov/nchs/data-visualization/mortality-leading-causes/index.htm',
+       left: 'right'
+     },
+     tooltip: {
+       trigger: 'item',
+       showDelay: 0,
+       transitionDuration: 0.2
+     },
+     visualMap: {
+       left: 'right',
+       min: 4000,
+       max: 270000,
+       inRange: {
+         color: [
+           '#313695',
+           '#4575b4',
+           '#74add1',
+           '#abd9e9',
+           '#e0f3f8',
+           '#ffffbf',
+           '#fee090',
+           '#fdae61',
+           '#f46d43',
+           '#d73027',
+           '#a50026'
         ]
-      },
-      text: ['High', 'Low'],
-      calculable: true
-    },
-    toolbox: {
-      show: true,
-      //orient: 'vertical',
-      left: 'left',
-      top: 'top',
-      feature: {
-        dataView: { readOnly: false },
-        restore: {},
-        saveAsImage: {}
-      }
-    },
-    series: [
-      {
-        name: 'USA Deaths',
-        type: 'map',
-        roam: true,
-        map: 'USA',
-        emphasis: {
-          label: {
-            show: true
-          }
-        },
-        data: mapdata
+       },
+       text: ['High', 'Low'],
+       calculable: true
+     },
+     toolbox: {
+       show: true,
+       //orient: 'vertical',
+       left: 'left',
+       top: 'top',
+       feature: {
+         dataView: { readOnly: false },
+         restore: {},
+         saveAsImage: {}
+       }
+     },
+     series: [
+       {
+         name: 'USA Deaths',
+         type: 'map',
+         roam: true,
+         map: 'USA',
+         emphasis: {
+           label: {
+             show: true
+           }
+         },
+         data: mapdata
         // data: [
         //   { name: 'Alabama', value: 4822023 },
         //   { name: 'Alaska', value: 731449 },
@@ -246,18 +251,21 @@ $.getJSON("/api/v1.0/usJSON", function (usaJson) {
         //   { name: 'Wyoming', value: 576412 },
         //   { name: 'Puerto Rico', value: 3667084 }
         // ]
-      }
-    ]
-  };
-  myChart.setOption(option);
-});
+       }
+     ]
+   };
+   myChart.setOption(option);
+ });
 
-if (option && typeof option === 'object') {
-  myChart.setOption(option);
+ if (option && typeof option === 'object') {
+   myChart.setOption(option);
+ }
+
+ window.addEventListener('resize', myChart.resize);
+ })
 }
 
-window.addEventListener('resize', myChart.resize);
-})
+drawEMap()
 
 // d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv')
 // .then(data=>

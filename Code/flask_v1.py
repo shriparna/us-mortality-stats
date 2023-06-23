@@ -45,16 +45,10 @@ def us_json():
 #################################################
 # Map data endpoint
 #################################################
-@app.route("/api/v1.0/mapdata")
-def map_data():
-    query = {"Cause Name":"All causes",
-             "Year":2017,
-             "State":{"$not":{"$in":["United States"]}}}
-    fields = {"_id":0,
-              "State":1,
-              "Deaths":1}
+@app.route("/api/v1.0/mapdata/<year>")
+def map_data(year):
     # result = list(get_from_mongo().find(query,fields))
-    match = {"$match":{"Cause Name":"All causes","Year":2017,"State":{"$not":{"$in":["United States"]}}}}
+    match = {"$match":{"Cause Name":"All causes","Year":int(year),"State":{"$not":{"$in":["United States"]}}}}
     alias = { "$project": {"_id": 0,"value": "$Deaths","name":"$State"}}
     result = list(get_from_mongo().aggregate([match,alias]))
     return dumps(result)
