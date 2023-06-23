@@ -41,8 +41,7 @@ function drawEbars()
   option = {
     title: {
       text:`${data[0]["State"]} - ${data[1]["Year"]}`,
-      textAlign:"auto",
-      left:"center",
+      left:"50%",
       textStyle:{
         color:"#edf2fb"
       }
@@ -67,6 +66,11 @@ function drawEbars()
       type: 'value',
       name:"Age-adjusted Death Rate",
       nameLocation:"center",
+      nameGap:50,
+      nameTextStyle:{
+        color:"white",
+        fontSize:20
+      },
       alignTicks:"true",
       axisLabel:{
         textStyle:{
@@ -76,6 +80,13 @@ function drawEbars()
     },
     yAxis: {
       type: 'category',
+      name:"Cause of Death",
+      nameLocation:"end",
+      nameTextStyle:{
+        color:"white",
+        fontSize:15,
+        align:"right"
+      },
       data:causeArray,
       axisTick:{
         alignWithLabel:true
@@ -141,7 +152,7 @@ function drawMap()
     });
     option = {
       title: {
-        text: `Age-adjusted Death Rates (${year})`,
+        text: `Age-adjusted Death Rates by US State (${year})`,
         subtext: 'Data from www.cdc.gov',
         sublink: 'https://www.cdc.gov/nchs/data-visualization/mortality-leading-causes/index.htm',
         left: 'center',
@@ -160,18 +171,17 @@ function drawMap()
         min: 600,
         max: 1000,
         inRange: {
-          color: ["#001219","#005f73","#0a9396","#94d2bd","#e9d8a6","#ee9b00","#ca6702","#bb3e03","#ae2012","#9b2226"
-            // '#313695',
-            // '#4575b4',
-            // '#74add1',
-            // '#abd9e9',
-            // '#e0f3f8',
-            // '#ffffbf',
-            // '#fee090',
-            // '#fdae61',
-            // '#f46d43',
-            // '#d73027',
-            // '#a50026'
+          color: [
+            "#001219",
+            "#005f73",
+            "#0a9396",
+            "#94d2bd",
+            "#e9d8a6",
+            "#ee9b00",
+            "#ca6702",
+            "#bb3e03",
+            "#ae2012",
+            "#9b2226"
           ]
         },
         text: ['High', 'Low'],
@@ -200,7 +210,8 @@ function drawMap()
           emphasis: {
             label: {
               show: true
-            }
+            },
+            focus:"self"
           },
           data: mapdata
         }
