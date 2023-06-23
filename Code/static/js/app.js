@@ -29,7 +29,7 @@ function drawEbars()
       deathArray.push(x["Age-adjusted Death Rate"])
     }
     
-  let dom = document.getElementById("chart-container");
+  let dom = document.getElementById("myDiv2");
   let myChart = echarts.init(dom, null, {
     renderer: 'canvas',
     useDirtyRect: false
@@ -141,7 +141,7 @@ function drawMap()
     });
     option = {
       title: {
-        text: `USA Death Statistics (${year})`,
+        text: `Age-adjusted Death Rates (${year})`,
         subtext: 'Data from www.cdc.gov',
         sublink: 'https://www.cdc.gov/nchs/data-visualization/mortality-leading-causes/index.htm',
         left: 'center',
@@ -155,7 +155,8 @@ function drawMap()
         transitionDuration: 0.2
       },
       visualMap: {
-        left: '70%',
+        left: '90%',
+        top: '50%',
         min: 600,
         max: 1000,
         inRange: {
