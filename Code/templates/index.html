@@ -19,9 +19,20 @@
     </div>
     <div class="headerContainer" id="home">
       <h1>United States Mortality Rates</h1>
-      <h3>What are the deadliest diseases of your state?</h3>
+      <h3>What are the top causes of death in your state?</h3>
     </div>
-    <h2>Map</h2>
+    <h2>Charts</h2>
+    <h4>Use the Dropdowns to interact with the charts</h4>
+    <select id="selDataset" onchange="optionChanged(this.value)">
+      {% for x in data[0] %}
+      <option value="{{ x }}">{{ x }}</option>
+      {% endfor %}
+    </select>
+    <select id="selYear" onchange="yearChanged(this.value)">
+      {% for x in data[1] %}
+      <option value="{{ x }}">{{ x }}</option>
+      {% endfor %}
+    </select>
     <div class="container">
       <div class="box">
         <div class="box-row">
@@ -39,7 +50,7 @@
         <div class="row">
           <div class="col-md-2">
             <div class="well">
-              <h5>Pick a State and Year to view the age-adjusted death rate by Causes</h5>
+              <!-- <h5>Pick a State and Year to view the age-adjusted death rate by Causes</h5>
               <select id="selDataset" onchange="optionChanged(this.value)">
                 {% for x in data[0] %}
                 <option value="{{ x }}">{{ x }}</option>
@@ -49,7 +60,7 @@
                 {% for x in data[1] %}
                 <option value="{{ x }}">{{ x }}</option>
                 {% endfor %}
-              </select>
+              </select> -->
             </div>
           </div>
           <div class="col-md-5">
