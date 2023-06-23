@@ -171,18 +171,17 @@ function drawMap()
         min: 600,
         max: 1000,
         inRange: {
-          color: ["#001219","#005f73","#0a9396","#94d2bd","#e9d8a6","#ee9b00","#ca6702","#bb3e03","#ae2012","#9b2226"
-            // '#313695',
-            // '#4575b4',
-            // '#74add1',
-            // '#abd9e9',
-            // '#e0f3f8',
-            // '#ffffbf',
-            // '#fee090',
-            // '#fdae61',
-            // '#f46d43',
-            // '#d73027',
-            // '#a50026'
+          color: [
+            "#001219",
+            "#005f73",
+            "#0a9396",
+            "#94d2bd",
+            "#e9d8a6",
+            "#ee9b00",
+            "#ca6702",
+            "#bb3e03",
+            "#ae2012",
+            "#9b2226"
           ]
         },
         text: ['High', 'Low'],
@@ -211,7 +210,8 @@ function drawMap()
           emphasis: {
             label: {
               show: true
-            }
+            },
+            focus:"self"
           },
           data: mapdata
         }
