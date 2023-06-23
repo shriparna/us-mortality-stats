@@ -50,17 +50,6 @@
         <div class="row">
           <div class="col-md-2">
             <div class="well">
-              <!-- <h5>Pick a State and Year to view the age-adjusted death rate by Causes</h5>
-              <select id="selDataset" onchange="optionChanged(this.value)">
-                {% for x in data[0] %}
-                <option value="{{ x }}">{{ x }}</option>
-                {% endfor %}
-              </select>
-              <select id="selYear" onchange="yearChanged(this.value)">
-                {% for x in data[1] %}
-                <option value="{{ x }}">{{ x }}</option>
-                {% endfor %}
-              </select> -->
             </div>
           </div>
           <div class="col-md-5">
@@ -99,11 +88,11 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
-<!-- <footer>
+<footer>
     <section class="footerContainer">
-        <img src="../images/ucb_logo.PNG">
-        <img src="../images/edx_logo.PNG">
-        <img src="../images/cdc_logo.PNG">
+        <!-- <img src="../images/ucb_logo.png">
+        <img src="../images/edx_logo.png">
+        <img src="../images/cdc_logo.png"> -->
     </section>
-</footer> -->
+</footer>
 </html>
