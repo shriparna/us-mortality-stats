@@ -1,5 +1,5 @@
 # Dependencies
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template
 from pymongo import MongoClient
 from bson.json_util import dumps
 
@@ -13,7 +13,6 @@ def get_from_mongo():
 # Flask Setup
 #################################################
 app = Flask(__name__)
-# app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 
 #################################################
 # Root endpoint
@@ -40,7 +39,7 @@ def us_json():
     query = {}
     fields = {"_id":0}
     result = states.find_one(query,fields)
-    return result
+    return dumps(result)
 
 #################################################
 # Map data endpoint
@@ -57,7 +56,7 @@ def map_data(year):
     match = {"$match":{"Cause Name":"All causes","Year":int(year),"State":{"$not":{"$in":["United States"]}}}}
     alias = { "$project": {"_id": 0,"value": "$Age-adjusted Death Rate","name":"$State"}}
     result = list(get_from_mongo().aggregate([match,alias]))
-    return result
+    return dumps(result)
 
 #################################################
 # State data endpoint
@@ -67,11 +66,7 @@ def get_state(state):
     query = {"State":state}
     fields = {"_id":0}
     result = list(get_from_mongo().find(query,fields))
-    return result
-    # result = list(get_from_mongo().find(query))
-    # return json.loads(dumps(result))
-    # return current_app.response_class(dumps(result),mimetype="application/json")
-    # return dumps(mortality.find(query))
+    return dumps(result)
 
 #################################################
 # Render HTML
@@ -102,7 +97,7 @@ def geo_code():
              "Year":2017}
     result = get_from_mongo().find(query).sort("State",1)
     states = [x["State"] for x in result]
-    return states
+    return dumps(states)
 
 #################################################
 # Years list endpoint
@@ -113,7 +108,7 @@ def get_years():
              "State":"Alabama"}
     result = get_from_mongo().find(query).sort("Year",-1)
     years = [x["Year"] for x in result]
-    return years
+    return dumps(years)
 
 #################################################
 # Bar data endpoint
@@ -125,7 +120,7 @@ def get_bar_data(state,year):
              "Cause Name":{"$not":{"$in":["All causes"]}}}
     fields = {"_id":0}
     result = list(get_from_mongo().find(query,fields).sort("Age-adjusted Death Rate",1))
-    return result
+    return dumps(result)
 
 #################################################
 # Line data endpoint
