@@ -40,7 +40,7 @@ function drawEbars()
 
   option = {
     title: {
-      text:`${data[0]["State"]} Age-adjusted Death Rate by Cause Name for ${data[1]["Year"]}`,
+      text:`${data[0]["State"]} - ${data[1]["Year"]}`,
       textAlign:"auto",
       left:"center",
       textStyle:{
@@ -156,18 +156,18 @@ function drawMap()
         min: 600,
         max: 1000,
         inRange: {
-          color: [
-            '#313695',
-            '#4575b4',
-            '#74add1',
-            '#abd9e9',
-            '#e0f3f8',
-            '#ffffbf',
-            '#fee090',
-            '#fdae61',
-            '#f46d43',
-            '#d73027',
-            '#a50026'
+          color: ["#00ff00","#ffff00","#ff0000"
+            // '#313695',
+            // '#4575b4',
+            // '#74add1',
+            // '#abd9e9',
+            // '#e0f3f8',
+            // '#ffffbf',
+            // '#fee090',
+            // '#fdae61',
+            // '#f46d43',
+            // '#d73027',
+            // '#a50026'
           ]
         },
         text: ['High', 'Low'],
