@@ -41,8 +41,7 @@ function drawEbars()
   option = {
     title: {
       text:`${data[0]["State"]} - ${data[1]["Year"]}`,
-      textAlign:"auto",
-      left:"center",
+      left:"50%",
       textStyle:{
         color:"#edf2fb"
       }
@@ -67,6 +66,11 @@ function drawEbars()
       type: 'value',
       name:"Age-adjusted Death Rate",
       nameLocation:"center",
+      nameGap:50,
+      nameTextStyle:{
+        color:"white",
+        fontSize:20
+      },
       alignTicks:"true",
       axisLabel:{
         textStyle:{
@@ -76,6 +80,13 @@ function drawEbars()
     },
     yAxis: {
       type: 'category',
+      name:"Cause of Death",
+      nameLocation:"end",
+      nameTextStyle:{
+        color:"white",
+        fontSize:15,
+        align:"right"
+      },
       data:causeArray,
       axisTick:{
         alignWithLabel:true
@@ -141,7 +152,7 @@ function drawMap()
     });
     option = {
       title: {
-        text: `Age-adjusted Death Rates (${year})`,
+        text: `Age-adjusted Death Rates by US State (${year})`,
         subtext: 'Data from www.cdc.gov',
         sublink: 'https://www.cdc.gov/nchs/data-visualization/mortality-leading-causes/index.htm',
         left: 'center',
