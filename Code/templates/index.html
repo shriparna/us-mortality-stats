@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+<title>US Mortality Rate</title>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
     <link  rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
-      <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-    crossorigin="" />
 </head>
 <body>
     <div class="topnav">
-      <a class="active" href="#home">Home</a>
-      <a href="#news">Data</a>
-      <a href="#contact">About Us</a>
-      <a href="#about">Sources</a>
+      <a href="#home">Home</a>
+      <a href="#myDiv">Map</a>
+      <a href="#graphs">Graphs</a>
+      <a href="#aboutus">About Us</a>
+      <a href="#sources">Sources</a>
     </div>
-    <div class="headerContainer">
+    <div class="headerContainer" id="home">
       <h1>United States Mortality Rates</h1>
       <h3>What are the deadliest diseases of your state?</h3>
     </div>
+    <h2>Map</h2>
     <div id='myDiv'><!-- Choropleth --></div>
     <div class="container">
         <div class="row">
           <div class="col-md-12 jumbotron text-center">
-            <p>Use the interactive charts below to explore the dataset</p>
+            <h2 id="graphs">Graphs</h2>
           </div>
         </div>
         <div class="row">
           <div class="col-md-2">
             <div class="well">
-              <h5>Pick a State from the dropdown menu</h5>
+              <h5>Pick a State and Year to view the age-adjusted death rate by Causes</h5>
               <select id="selDataset" onchange="optionChanged(this.value)">
                 {% for x in data[0] %}
                 <option value="{{ x }}">{{ x }}</option>
@@ -53,11 +51,12 @@
         </div>
         <div class="row">
           <div class="col-md-12">
+            <div id="line"></div>
           </div>
         </div>
       </div>
     <section class="aboutContainer">
-      <h2 class="aboutUsText">About Us</h2>
+      <h2 class="aboutUsText" id="aboutus">About Us</h2>
       <p class="aboutUsText">We are a group of students from the Data Analytics course provided by the University of California, Berkeley Extension program and edX. We chose this project because...<i>why did we chose this project guys? What's a good reason to put here?</i></p>
       <ul>
           <li><a href="https://github.com/AbousamraEd" target="_blank" rel="noopener noreferrer">Ahmed Abousamra</a></li>
@@ -68,8 +67,14 @@
           <li><a href="https://github.com/Nolan-Tonthat" target="_blank" rel="noopener noreferrer">Nolan Tonthat</a></li>
       </ul>
     </section>
-    <!-- <script src='https://cdn.plot.ly/plotly-2.24.1.min.js'></script> -->
-    <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script> -->
+    <h2 id="sources">Sources</h2>
+    <ul>
+        <li><a href="https://www.cdc.gov/nchs/data-visualization/mortality-leading-causes/index.htm" target="_blank" rel="noopener noreferrer">CDC National Center for Health Statistics</a></li>
+        <li><a href="https://echarts.apache.org/en/index.html" target="_blank" rel="noopener noreferrer">Apache eCharts</a></li>
+        <li><a href="https://plotly.com/python/" target="_blank" rel="noopener noreferrer">Plotly</a></li>
+        <li><a href="https://fonts.google.com/" target="_blank" rel="noopener noreferrer">Google Fonts</a></li>
+    </ul>
+    <br>
     <script src="https://fastly.jsdelivr.net/npm/jquery"></script>
     <script src="https://fastly.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>  
     <script src="https://d3js.org/d3.v5.min.js"></script>
@@ -84,4 +89,3 @@
     </section>
 </footer> -->
 </html>
-<!-- {{ url_for('static', filename='js/app.js') }} -->
