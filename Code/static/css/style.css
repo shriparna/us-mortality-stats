@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+  }
+
 body {
     color: #d7d9de;
     background-color: #1d1d1d;
@@ -18,6 +22,7 @@ h2 {
     text-transform: uppercase;
     font-family: 'Oswald', sans-serif;
     font-size: 32px;
+    padding: 10px;
 }
 
 h3 {
@@ -33,6 +38,7 @@ p {
     font-family: 'Poppins', sans-serif;
     font-size: 18px;
     line-height: 25px;
+    padding: 10px;
 }
 
 li {
@@ -42,13 +48,30 @@ li {
     font-size: 18px;
 }
 
+a:link, a:visited {
+    color: white;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  a:hover, a:active {
+    background-color: #0e0d0d;
+  }
+
 .topnav {
     background-color: #141414;
     overflow: hidden;
+    position: fixed;
+    z-index: 9;
+    top: 0;
+    width: 100%;
 }
 
 .topnav a {
     float: left;
+    display: block;
     color: #f2f2f2;
     text-align: center;
     padding: 14px 16px;
@@ -70,9 +93,9 @@ li {
 .headerContainer {
     display: flex;
     flex-direction: column;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/medical_bottles.jpg");
-    min-height: 45em;
-    height: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    min-height: 20em;
+    height: 50%;
     align-self: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -83,7 +106,7 @@ li {
 
 .aboutContainer {
     background-color: #141414;
-    padding-top: 30px;
+    padding-top: 15px;
     padding-bottom: 30px;
     padding-left: 15px;
     padding-right: 15px;
@@ -93,6 +116,9 @@ li {
     text-align: right;
 }
 
+.aboutUsLinks {
+    text-align: right;
+}
 .footerContainer {
     background-color: #ffffff;
     display: flex;
@@ -107,12 +133,12 @@ li {
   }
 #myDiv {
 position: relative;
-height: 100vh;
+height: 50vh;
 overflow: hidden;
 }
 
 #chart-container {
 position: relative;
-height: 100vh;
+height: 45vh;
 overflow: hidden;
 }
