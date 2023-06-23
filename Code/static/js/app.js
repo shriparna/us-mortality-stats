@@ -141,7 +141,7 @@ function drawMap()
     });
     option = {
       title: {
-        text: 'USA Death Statistics (2017)',
+        text: `USA Death Statistics (${year})`,
         subtext: 'Data from www.cdc.gov',
         sublink: 'https://www.cdc.gov/nchs/data-visualization/mortality-leading-causes/index.htm',
         left: 'center'
