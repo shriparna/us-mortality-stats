@@ -124,7 +124,7 @@ def get_bar_data(state,year):
              "Year":int(year),
              "Cause Name":{"$not":{"$in":["All causes"]}}}
     fields = {"_id":0}
-    result = list(get_from_mongo().find(query,fields).sort("Deaths",1))
+    result = list(get_from_mongo().find(query,fields).sort("Age-adjusted Death Rate",1))
     return result
 
 # Debug mode
