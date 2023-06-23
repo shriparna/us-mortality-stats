@@ -105,16 +105,16 @@ function drawEbars()
 
 drawEbars()
 
-var dom = document.getElementById('myDiv');
-var myChart = echarts.init(dom, null, {
+let dom = document.getElementById('myDiv');
+let myChart = echarts.init(dom, null, {
   renderer: 'canvas',
   useDirtyRect: false
 });
-var app = {};
+let app = {};
 // var ROOT_PATH = 'https://echarts.apache.org/examples';
-var option;
+let option;
 
-myChart.showLoading();
+// myChart.showLoading();
 $.getJSON("/api/v1.0/usJSON", function (usaJson) {
   d3.json("/api/v1.0/mapdata").then(mapdata => {
   myChart.hideLoading();
@@ -138,9 +138,9 @@ $.getJSON("/api/v1.0/usJSON", function (usaJson) {
   option = {
     title: {
       text: 'USA Death Statistics (2017)',
-      subtext: 'Data from /www.cdc.gov',
+      subtext: 'Data from www.cdc.gov',
       sublink: 'https://www.cdc.gov/nchs/data-visualization/mortality-leading-causes/index.htm',
-      left: 'right'
+      left: 'center'
     },
     tooltip: {
       trigger: 'item',
@@ -149,8 +149,8 @@ $.getJSON("/api/v1.0/usJSON", function (usaJson) {
     },
     visualMap: {
       left: 'right',
-      min: 4000,
-      max: 270000,
+      min: 600,
+      max: 1000,
       inRange: {
         color: [
           '#313695',

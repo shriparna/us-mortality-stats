@@ -52,10 +52,10 @@ def map_data():
              "State":{"$not":{"$in":["United States"]}}}
     fields = {"_id":0,
               "State":1,
-              "Deaths":1}
+              "Age-adjusted Death Rate":1}
     # result = list(get_from_mongo().find(query,fields))
     match = {"$match":{"Cause Name":"All causes","Year":2017,"State":{"$not":{"$in":["United States"]}}}}
-    alias = { "$project": {"_id": 0,"value": "$Deaths","name":"$State"}}
+    alias = { "$project": {"_id": 0,"value": "$Age-adjusted Death Rate","name":"$State"}}
     result = list(get_from_mongo().aggregate([match,alias]))
     return result
 
