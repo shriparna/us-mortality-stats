@@ -40,7 +40,7 @@ def us_json():
     query = {}
     fields = {"_id":0}
     result = states.find_one(query,fields)
-    return result
+    return dumps(result)
 
 #################################################
 # Map data endpoint
@@ -57,7 +57,7 @@ def map_data():
     match = {"$match":{"Cause Name":"All causes","Year":2017,"State":{"$not":{"$in":["United States"]}}}}
     alias = { "$project": {"_id": 0,"value": "$Deaths","name":"$State"}}
     result = list(get_from_mongo().aggregate([match,alias]))
-    return result
+    return dumps(result)
 
 #################################################
 # State data endpoint
@@ -67,7 +67,7 @@ def get_state(state):
     query = {"State":state}
     fields = {"_id":0}
     result = list(get_from_mongo().find(query,fields))
-    return result
+    return dumps(result)
     # result = list(get_from_mongo().find(query))
     # return json.loads(dumps(result))
     # return current_app.response_class(dumps(result),mimetype="application/json")
@@ -102,7 +102,7 @@ def geo_code():
              "Year":2017}
     result = get_from_mongo().find(query).sort("State",1)
     states = [x["State"] for x in result]
-    return states
+    return dumps(result)
 
 #################################################
 # Years list endpoint
@@ -113,7 +113,7 @@ def get_years():
              "State":"Alabama"}
     result = get_from_mongo().find(query).sort("Year",-1)
     years = [x["Year"] for x in result]
-    return years
+    return dumps(result)
 
 #################################################
 # Bar data endpoint
@@ -125,7 +125,7 @@ def get_bar_data(state,year):
              "Cause Name":{"$not":{"$in":["All causes"]}}}
     fields = {"_id":0}
     result = list(get_from_mongo().find(query,fields).sort("Age-adjusted Death Rate",1))
-    return result
+    return dumps(result)
 
 # Debug mode
 if __name__ == "__main__":
