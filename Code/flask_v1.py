@@ -1,5 +1,5 @@
 # Dependencies
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from pymongo import MongoClient
 from bson.json_util import dumps
 
@@ -30,13 +30,44 @@ def welcome():
            f"Bar Data: /api/v1.0/bar_data/state/year")
 
 #################################################
+# USA JSON endpoint
+#################################################
+@app.route("/api/v1.0/usJSON")
+def us_json():
+    client = MongoClient(port=27017)
+    db = client.health
+    states = db.states
+    query = {}
+    fields = {"_id":0}
+    result = states.find_one(query,fields)
+    return result
+
+#################################################
+# Map data endpoint
+#################################################
+@app.route("/api/v1.0/mapdata")
+def map_data():
+    query = {"Cause Name":"All causes",
+             "Year":2017,
+             "State":{"$not":{"$in":["United States"]}}}
+    fields = {"_id":0,
+              "State":1,
+              "Deaths":1}
+    # result = list(get_from_mongo().find(query,fields))
+    match = {"$match":{"Cause Name":"All causes","Year":2017,"State":{"$not":{"$in":["United States"]}}}}
+    alias = { "$project": {"_id": 0,"value": "$Deaths","name":"$State"}}
+    result = list(get_from_mongo().aggregate([match,alias]))
+    return result
+
+#################################################
 # State data endpoint
 #################################################
 @app.route("/api/v1.0/<state>")
 def get_state(state):
     query = {"State":state}
-    result = get_from_mongo().find(query)
-    return dumps(result)
+    fields = {"_id":0}
+    result = list(get_from_mongo().find(query,fields))
+    return result
     # result = list(get_from_mongo().find(query))
     # return json.loads(dumps(result))
     # return current_app.response_class(dumps(result),mimetype="application/json")
@@ -92,8 +123,9 @@ def get_bar_data(state,year):
     query = {"State":state,
              "Year":int(year),
              "Cause Name":{"$not":{"$in":["All causes"]}}}
-    result = get_from_mongo().find(query).sort("Deaths",1)
-    return dumps(result)
+    fields = {"_id":0}
+    result = list(get_from_mongo().find(query,fields).sort("Age-adjusted Death Rate",1))
+    return result
 
 # Debug mode
 if __name__ == "__main__":
