@@ -127,6 +127,20 @@ def get_bar_data(state,year):
     result = list(get_from_mongo().find(query,fields).sort("Age-adjusted Death Rate",1))
     return dumps(result)
 
+#################################################
+# Line data endpoint
+#################################################
+@app.route("/api/v1.0/line")
+def get_line():
+    query = {"Cause Name":"All causes",
+             "State":"Alabama"}
+    fields = {"_id":0,
+              "Year":1,
+              "State":1,
+              "Age-adjusted Death Rate":1}
+    result = get_from_mongo().find(query,fields).sort("Year",1)
+    return dumps(result)
+
 # Debug mode
 if __name__ == "__main__":
     app.run(debug=True)
