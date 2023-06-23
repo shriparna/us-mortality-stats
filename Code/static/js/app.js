@@ -312,3 +312,27 @@ window.addEventListener('resize', myChart.resize);
 // Plotly.newPlot("myDiv", data, layout, {showLink: false});
 // })
 d3.json("/api/v1.0/mapdata").then(data=>console.log(data))
+
+function drawLine()
+{
+  d3.json("/api/v1.0/line").then(data=>
+  {let xdata = []
+  let ydata = []
+  for (a of data)
+  {
+    xdata.push(a.Year)
+    ydata.push(a["Age-adjusted Death Rate"])
+  }
+  let trace1 = {
+    x: xdata,
+    y: ydata,
+    type: 'line'
+  }
+  
+  let data1 = [trace1];
+  
+  Plotly.newPlot('line', data1);
+})}
+drawLine()
+
+d3.json("/api/v1.0/line").then(data=>console.log(data))
