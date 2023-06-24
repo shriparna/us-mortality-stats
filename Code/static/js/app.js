@@ -249,50 +249,9 @@ function drawMap()
   window.addEventListener('resize', myChart.resize);
 })
 }
-
-function drawLine()
-{
-  d3.json("/api/v1.0/line").then(data=>
-  {let xdata = []
-  let ydata = []
-  for (a of data)
-  {
-    xdata.push(a.Year)
-    ydata.push(a["Age-adjusted Death Rate"])
-  }
-  var dom = document.getElementById('line');
-  var myChart = echarts.init(dom, null, {
-    renderer: 'canvas',
-    useDirtyRect: false
-  });
-  var app = {};
-
-  var option;
-
-  option = {
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: xdata
-    },
-    yAxis: {
-      type: 'value'
-    },
-    series: [
-      {
-        data: ydata,
-        type: 'line',
-        smooth: 'true'
-      }
-    ]
-  };
-
-  if (option && typeof option === 'object') {
-    myChart.setOption(option);
-  }
-
-  window.addEventListener('resize', myChart.resize);
-})}
+///
+///
+///
 
 function drawPlotly()
 {
@@ -350,3 +309,132 @@ function drawPlotly()
   
   Plotly.newPlot('chart-container', data1, layout);
 })}
+
+///////////////////////////////////
+//////////////////////////////////
+/////////////////////////////////
+function drawLine()
+{
+  var dom = document.getElementById('line');
+  var myChart = echarts.init(dom, null, {
+    renderer: 'canvas',
+    useDirtyRect: false
+  });
+  var app = {};
+  // var ROOT_PATH = 'https://echarts.apache.org/examples';
+  var option;
+
+  $.getJSON(
+    '/api/v1.0/racing',
+    function (_rawData) {
+      run(_rawData);
+    }
+  );
+  function run(_rawData) {
+    
+    const causes = [
+      "Unintentional injuries",
+      "Alzheimer's disease",
+      "Stroke",
+      "CLRD",
+      "Diabetes",
+      "Heart disease",
+      "Influenza and pneumonia",
+      "Suicide",
+      "Cancer",
+      "Kidney disease"
+    ];
+    const datasetWithFilters = [];
+    const seriesList = [];
+    echarts.util.each(causes, function (country) {
+      var datasetId = 'dataset_' + country;
+      datasetWithFilters.push({
+        id: datasetId,
+        fromDatasetId: 'dataset_raw',
+        transform: {
+          type: 'filter',
+          config: {
+            and: [
+              { dimension: 'Year', gte: 1999 },
+              { dimension: 'Cause Name', '=': country }
+            ]
+          }
+        }
+      });
+      seriesList.push({
+        type: 'line',
+        datasetId: datasetId,
+        showSymbol: false,
+        name: country,
+        endLabel: {
+          show: true,
+          color:"white",
+          formatter: function (params) {
+            return params.value[1] + ': ' + params.value[0];
+          }
+        },
+        labelLayout: {
+          moveOverlap: 'shiftY'
+        },
+        emphasis: {
+          focus: 'series'
+        },
+        encode: {
+          x: 'Year',
+          y: 'Age-adjusted Death Rate',
+          label: ['Cause Name', 'Age-adjusted Death Rate'],
+          itemName: 'Year',
+          tooltip: ['Age-adjusted Death Rate']
+        }
+      });
+    });
+    option = {
+      animationDuration: 10000,
+      dataset: [
+        {
+          id: 'dataset_raw',
+          source: _rawData
+        },
+        ...datasetWithFilters
+      ],
+      title: {
+        text: 'US Age-adjusted Death Rates from 1999 to 2017',
+        textStyle:{
+          color:"white"
+        }
+      },
+      tooltip: {
+        order: 'valueDesc',
+        trigger: 'axis'
+      },
+      xAxis: {
+        type: 'category',
+        nameLocation: 'middle',
+        axisLabel:{
+          color:"white"
+        }
+      },
+      yAxis: {
+        name: 'Age-adjusted Death Rate',
+        nameTextStyle:{
+          color:"white"
+        },
+        axisLabel:{
+          color:"white"
+        },
+        // type:'log'
+      },
+      grid: {
+        right: 140
+      },
+      series: seriesList
+    };
+    myChart.setOption(option);
+  }
+
+  if (option && typeof option === 'object') {
+    myChart.setOption(option);
+  }
+
+  window.addEventListener('resize', myChart.resize);
+}
