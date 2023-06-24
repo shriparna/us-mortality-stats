@@ -136,6 +136,20 @@ def get_line():
     result = get_from_mongo().find(query,fields).sort("Year",1)
     return dumps(result)
 
+#################################################
+# Line state endpoint
+#################################################
+@app.route("/api/v1.0/line/<state>")
+def get_line_state(state):
+    query = {"Cause Name":"All causes",
+             "State":state}
+    fields = {"_id":0,
+              "Year":1,
+              "State":1,
+              "Age-adjusted Death Rate":1}
+    result = get_from_mongo().find(query,fields).sort("Year",1)
+    return dumps(result)
+
 # Debug mode
 if __name__ == "__main__":
     app.run(debug=True)

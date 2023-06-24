@@ -1,10 +1,12 @@
 drawEbars()
 drawMap()
 drawLine()
+drawPlotly()
 
 function optionChanged(state)
 {
   drawEbars()
+  drawPlotly()
 }
 
 function yearChanged(year)
@@ -28,94 +30,114 @@ function drawEbars()
       causeArray.push(x["Cause Name"])
       deathArray.push(x["Age-adjusted Death Rate"])
     }
-    
-  let dom = document.getElementById("myDiv2");
-  let myChart = echarts.init(dom, null, {
-    renderer: 'canvas',
-    useDirtyRect: false
-  })
-  let app = {}
+    // let colorArray = [
+    //   "#ff0000",
+    //   "#ff8700",
+    //   "#ffd300",
+    //   "#deff0a",
+    //   "#a1ff0a",
+    //   "#0aff99",
+    //   "#0aefff",
+    //   "#147df5",
+    //   "#580aff",
+    //   "#be0aff"
+    // ]
 
-  let option
+    // function getBarColor()
+    // {
 
-  option = {
-    title: {
-      text:`${data[0]["State"]} - ${data[1]["Year"]}`,
-      left:"50%",
-      textStyle:{
-        color:"#edf2fb"
-      }
-    },
-    grid:{
-      containLabel:true,
-      tooltip:{
-        axisPointer:{
-          label:{
-            show:true,
-            position:"top"
+    // }
+    let dom = document.getElementById("myDiv2");
+    let myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    })
+    let app = {}
+
+    let option
+
+    option = {
+      title: {
+        text:`${data[0]["State"]} - ${data[1]["Year"]}`,
+        left:"50%",
+        textStyle:{
+          color:"#edf2fb"
+        }
+      },
+      grid:{
+        containLabel:true,
+        tooltip:{
+          axisPointer:{
+            label:{
+              show:true,
+              position:"top"
+            }
           }
         }
-      }
-    },
-    tooltip:{
-      formatter:"{c}",
-      show:true,
-      trigger:"axis"
-    },
-    xAxis: {
-      type: 'value',
-      name:"Age-adjusted Death Rate",
-      nameLocation:"center",
-      nameGap:50,
-      nameTextStyle:{
-        color:"white",
-        fontSize:20
       },
-      alignTicks:"true",
-      axisLabel:{
-        textStyle:{
-          color:"#edf2fb"
+      tooltip:{
+        formatter:"{c}",
+        show:true,
+        trigger:"axis"
+      },
+      xAxis: {
+        type: 'value',
+        name:"Age-adjusted Death Rate",
+        nameLocation:"center",
+        nameGap:50,
+        nameTextStyle:{
+          color:"white",
+          fontSize:20
+        },
+        alignTicks:"true",
+        axisLabel:{
+          textStyle:{
+            color:"#edf2fb"
+          }
         }
-      }
-    },
-    yAxis: {
-      type: 'category',
-      name:"Cause of Death",
-      nameLocation:"end",
-      nameTextStyle:{
-        color:"white",
-        fontSize:15,
-        align:"right"
       },
-      data:causeArray,
+      yAxis: {
+        type: 'category',
+        name:"Cause of Death",
+        nameLocation:"end",
+        nameTextStyle:{
+          color:"white",
+          fontSize:15,
+          align:"right"
+        },
+        data:causeArray,
+        axisTick:{
+          alignWithLabel:true
+        },
+        axisLabel:{
+          textStyle:{
+            color:"#edf2fb"
+          }
+        }
+      },
+      series: [
+        {
+          data:deathArray,
+          type:"bar",
+          itemStyle : { color:"#0A9396"
+          // "white"
+        },
+          label : {show: true, position:'right',color:'white'}
+        }
+        
+      ],
       axisTick:{
-        alignWithLabel:true
-      },
-      axisLabel:{
-        textStyle:{
-          color:"#edf2fb"
+        lineStyle:{
+          color:"white"
         }
-      }
-    },
-    series: [
-      {
-        data:deathArray,
-        type:"bar",
-        itemStyle : { normal: {label : {show: true, position: 'right', color:'#FFFFFF'}}}
-      }
-    ],
-    axisTick:{
-      lineStyle:{
-        color:"white"
       }
     }
-  }
 
-  if (option && typeof option === 'object') {
-    myChart.setOption(option)
-  }
+    if (option && typeof option === 'object') {
+      myChart.setOption(option)
+    }
 
-  window.addEventListener('resize', myChart.resize)
+    window.addEventListener('resize', myChart.resize)
   })
 }
 
@@ -152,7 +174,7 @@ function drawMap()
     });
     option = {
       title: {
-        text: `Age-adjusted Death Rates by US State (${year})`,
+        text: `Age-adjusted Death Rates from All Causes (${year})`,
         subtext: 'Data from www.cdc.gov',
         sublink: 'https://www.cdc.gov/nchs/data-visualization/mortality-leading-causes/index.htm',
         left: 'center',
@@ -270,4 +292,61 @@ function drawLine()
   }
 
   window.addEventListener('resize', myChart.resize);
+})}
+
+function drawPlotly()
+{
+  let state = d3.select("#selDataset").node().value
+
+  d3.json(`/api/v1.0/line/${state}`).then(data=>
+  {let xdata = []
+  let ydata = []
+  for (a of data)
+  {
+    xdata.push(a.Year)
+    ydata.push(a["Age-adjusted Death Rate"])
+  }
+  let trace1 = {
+    x: xdata,
+    y: ydata,
+    type: 'line'
+  }
+  let layout = {
+    title: {
+      text: `Age-adjusted Death Rate for ${state}`,
+      font: {
+        color: "white"
+      }
+    },
+    paper_bgcolor: '#1D1D1D',
+    plot_bgcolor: '#1D1D1D',
+    xaxis: {
+      title: {
+        text: 'Years',
+        font: {
+          color: 'white' // Change the color to your desired value
+        }
+      },
+      tickfont: {
+        color: 'white' // Change the tick color to white
+      }
+    },
+    yaxis: {
+      title: {
+        text: 'Death Rate',
+        font: {
+          color: 'red' // Change the color to your desired value
+        }
+      },
+      gridcolor: 'white',
+      gridwidth: 0.01,
+      tickfont: {
+        color: 'white' // Change the tick color to white
+      }
+    }    
+  }
+  
+  let data1 = [trace1];
+  
+  Plotly.newPlot('chart-container', data1, layout);
 })}
