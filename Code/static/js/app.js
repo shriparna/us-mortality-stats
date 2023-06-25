@@ -1,25 +1,35 @@
+// Initialize page with visuals
 drawEbars()
 drawMap()
 drawLine()
 drawPlotly()
 
+// Dropdown for States
 function optionChanged(state)
 {
   drawEbars()
   drawPlotly()
 }
 
+// Dropdown for Years
 function yearChanged(year)
 {
   drawEbars()
   drawMap()
 }
 
+///////////////////////////////////
+///////////////////////////////////
+///////////////////////////////////
+
+// Draw Echarts Horizontal Bar Chart
 function drawEbars()
 {
+  // Get values from dropdowns
   let state = d3.select("#selDataset").node().value
   let year = d3.select("#selYear").node().value
 
+  // Navigate to Flask endpoint, get data, and draw chart
   d3.json(`/api/v1.0/bar_data/${state}/${year}`)
   .then(data =>
   {
@@ -30,23 +40,7 @@ function drawEbars()
       causeArray.push(x["Cause Name"])
       deathArray.push(x["Age-adjusted Death Rate"])
     }
-    // let colorArray = [
-    //   "#ff0000",
-    //   "#ff8700",
-    //   "#ffd300",
-    //   "#deff0a",
-    //   "#a1ff0a",
-    //   "#0aff99",
-    //   "#0aefff",
-    //   "#147df5",
-    //   "#580aff",
-    //   "#be0aff"
-    // ]
 
-    // function getBarColor()
-    // {
-
-    // }
     let dom = document.getElementById("myDiv2");
     let myChart = echarts.init(dom, null, {
       renderer: 'canvas',
@@ -141,9 +135,16 @@ function drawEbars()
   })
 }
 
+///////////////////////////////////
+///////////////////////////////////
+///////////////////////////////////
+
+// Draw Choropleth Map
 function drawMap()
 {
+  // Get Year from dropdown
   let year = d3.select("#selYear").node().value
+  
   let dom = document.getElementById('myDiv');
   let myChart = echarts.init(dom, null, {
     renderer: 'canvas',
@@ -152,7 +153,10 @@ function drawMap()
   let app = {};
   let option;
 
+  // Get US States Polygon Coordinates
   $.getJSON("/api/v1.0/usJSON", function (usaJson) {
+    
+    // Navigate to Flask endpoint, get data, and draw Map 
     d3.json(`/api/v1.0/mapdata/${year}`).then(mapdata => {
     myChart.hideLoading();
     echarts.registerMap('USA', usaJson, {
@@ -249,14 +253,18 @@ function drawMap()
   window.addEventListener('resize', myChart.resize);
 })
 }
-///
-///
-///
 
+///////////////////////////////////
+///////////////////////////////////
+///////////////////////////////////
+
+// Draw Plotly Line Graph
 function drawPlotly()
 {
+  // Get State from dropdown
   let state = d3.select("#selDataset").node().value
 
+  // Navigate to Flask endpoint, get data, and draw chart 
   d3.json(`/api/v1.0/line/${state}`).then(data=>
   {let xdata = []
   let ydata = []
@@ -283,24 +291,24 @@ function drawPlotly()
       title: {
         text: 'Years',
         font: {
-          color: 'white' // Change the color to your desired value
+          color: 'white'
         }
       },
       tickfont: {
-        color: 'white' // Change the tick color to white
+        color: 'white'
       }
     },
     yaxis: {
       title: {
         text: 'Death Rate',
         font: {
-          color: 'red' // Change the color to your desired value
+          color: 'red'
         }
       },
       gridcolor: 'white',
       gridwidth: 0.01,
       tickfont: {
-        color: 'white' // Change the tick color to white
+        color: 'white'
       }
     }    
   }
@@ -311,8 +319,10 @@ function drawPlotly()
 })}
 
 ///////////////////////////////////
-//////////////////////////////////
-/////////////////////////////////
+///////////////////////////////////
+///////////////////////////////////
+
+// Draw Echarts Racing Lines
 function drawLine()
 {
   var dom = document.getElementById('line');
@@ -321,12 +331,10 @@ function drawLine()
     useDirtyRect: false
   });
   var app = {};
-  // var ROOT_PATH = 'https://echarts.apache.org/examples';
   var option;
 
-  $.getJSON(
-    '/api/v1.0/racing',
-    function (_rawData) {
+  // Navigate to Flask endpoint, get data, and draw chart 
+  $.getJSON('/api/v1.0/racing', function (_rawData) {
       run(_rawData);
     }
   );
@@ -412,6 +420,9 @@ function drawLine()
         nameLocation: 'middle',
         axisLabel:{
           color:"white"
+        },
+        axisTick:{
+          alignWithLabel:true
         }
       },
       yAxis: {
