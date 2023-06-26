@@ -3,6 +3,7 @@ from flask import Flask, render_template
 from pymongo import MongoClient
 from bson.json_util import dumps
 
+# Connect to MongoDB and return health.mortality collection
 def get_from_mongo():
     client = MongoClient(port=27017)
     db = client.health
@@ -29,7 +30,31 @@ def welcome():
            f"Bar Data: /api/v1.0/bar_data/state/year")
 
 #################################################
-# USA JSON endpoint
+# Box Plot endpoint
+#################################################
+@app.route("/api/v1.0/boxplot")
+def boxplot():
+    query = {"Cause Name":"All causes",
+            "State":{"$not":{"$in":["United States"]}}}
+    fields = {"_id":0,
+              "Age-adjusted Death Rate":1,
+              "State":1,
+              "Year":1}
+    result = get_from_mongo().find(query,fields).sort("Year",1)
+    keys = list(result[0].keys())
+    keys.reverse()
+    main_list = []
+    main_list.append(keys)
+    for x in result:
+        temp_list = []
+        temp_list.append(x["Age-adjusted Death Rate"])
+        temp_list.append(x["State"])
+        temp_list.append(x["Year"])
+        main_list.append(temp_list)
+    return dumps(main_list)
+
+#################################################
+# Racing Lines endpoint
 #################################################
 @app.route("/api/v1.0/racing")
 def racing_lines():
@@ -70,14 +95,9 @@ def us_json():
 #################################################
 @app.route("/api/v1.0/mapdata/<year>")
 def map_data(year):
-    query = {"Cause Name":"All causes",
-             "Year":int(year),
-             "State":{"$not":{"$in":["United States"]}}}
-    fields = {"_id":0,
-              "State":1,
-              "Age-adjusted Death Rate":1}
-    # result = list(get_from_mongo().find(query,fields))
-    match = {"$match":{"Cause Name":"All causes","Year":int(year),"State":{"$not":{"$in":["United States"]}}}}
+    match = {"$match":{"Cause Name":"All causes",
+                       "Year":int(year),
+                       "State":{"$not":{"$in":["United States"]}}}}
     alias = { "$project": {"_id": 0,"value": "$Age-adjusted Death Rate","name":"$State"}}
     result = list(get_from_mongo().aggregate([match,alias]))
     return dumps(result)
@@ -144,20 +164,6 @@ def get_bar_data(state,year):
              "Cause Name":{"$not":{"$in":["All causes"]}}}
     fields = {"_id":0}
     result = list(get_from_mongo().find(query,fields).sort("Age-adjusted Death Rate",1))
-    return dumps(result)
-
-#################################################
-# Line data endpoint
-#################################################
-@app.route("/api/v1.0/line")
-def get_line():
-    query = {"Cause Name":"All causes",
-             "State":"Alabama"}
-    fields = {"_id":0,
-              "Year":1,
-              "State":1,
-              "Age-adjusted Death Rate":1}
-    result = get_from_mongo().find(query,fields).sort("Year",1)
     return dumps(result)
 
 #################################################

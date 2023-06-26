@@ -94,7 +94,7 @@ a:link, a:visited {
     display: flex;
     flex-direction: column;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-    min-height: 20em;
+    min-height: 18em;
     height: 50%;
     align-self: center;
     background-repeat: no-repeat;
@@ -162,6 +162,61 @@ overflow: hidden;
 
 #line {
     position: relative;
+    height: 80vh;
+    overflow: hidden;
+}
+
+#bar-race {
+    position: relative;
     height: 100vh;
     overflow: hidden;
+  }
+
+#box-plot {
+position: relative;
+height: 100vh;
+overflow: hidden;
+}
+
+.button {
+    border: none;
+    border-radius: 12px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    color: rgb(255, 255, 255);
+    background-color: rgb(75, 75, 75);
+    transition-duration: 0.4s;
+    padding: 4px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    /* margin: 4px 4px; */
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.dropdown {
+    border: none;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    color: rgb(255, 255, 255);
+    transition-duration: 0.4s;
+    padding: 4px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    /* margin: 4px 4px; */
+    cursor: pointer;
 }
