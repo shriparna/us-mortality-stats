@@ -12,8 +12,8 @@
 <body>
     <div class="topnav">
       <a href="#home">Home</a>
-      <a href="#chartHead">Map</a>
-      <a href="#graphs">Graphs</a>
+      <a href="#chartHead">Interactive Charts</a>
+      <a href="#graphs">Static Graph</a>
       <a href="#aboutus">About Us</a>
       <a href="#sources">Sources</a>
     </div>
@@ -21,8 +21,8 @@
       <h1>United States Mortality Rates</h1>
       <h3>What are the top causes of death in your state?</h3>
     </div>
-    <h2 id="chartHead">Charts</h2>
-    <h4>Use the Dropdowns to interact with the charts</h4>
+    <h2 id="chartHead">Interactive Charts</h2>
+    <p>Use the Dropdowns to interact with the charts</p>
     <select id="selDataset" onchange="optionChanged(this.value)">
       {% for x in data[0] %}
       <option value="{{ x }}">{{ x }}</option>
@@ -44,7 +44,7 @@
     <div class="container">
         <div class="row">
           <div class="col-md-12 jumbotron text-center">
-            <h2 id="graphs">Graphs</h2>
+            
           </div>
         </div>
         <div class="row">
@@ -58,6 +58,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
+            <h2 id="graphs">Static Graph</h2>
             <div id="line"></div>
           </div>
         </div>
