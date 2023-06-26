@@ -13,7 +13,8 @@
     <div class="topnav">
       <a href="#home">Home</a>
       <a href="#chartHead">Charts</a>
-      <a href="#graphs">Graph</a>
+      <a href="#box-plot">Box Plot</a>
+      <a href="#line">Racing Lines</a>
       <a href="#aboutus">About Us</a>
       <a href="#sources">Sources</a>
     </div>
@@ -24,12 +25,12 @@
     <h2 id="chartHead">Charts</h2>
     <h4>Use the Dropdowns to interact with the charts</h4>
     <div class="dropdown">
-      <select id="selYear" onchange="yearChanged(this.value)">
+      <select id="selYear">
         {% for x in data[1] %}
         <option value="{{ x }}">{{ x }}</option>
         {% endfor %}
       </select>
-      <select id="selDataset" onchange="optionChanged(this.value)">
+      <select id="selDataset">
         {% for x in data[0] %}
         <option value="{{ x }}">{{ x }}</option>
         {% endfor %}
@@ -45,25 +46,16 @@
     </div>
     <div class="container">
         <div class="row">
-          <div class="col-md-12 jumbotron text-center">
-            <h2 id="graphs">Graph</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-2">
-            <div class="well">
-            </div>
-          </div>
           <div class="col-md-5">
-            <div id="box-plot"></div>
+            <h2 id="box-plot">Box Plot</h2>
             <!-- <div id="bar-race"></div> -->
             <!-- <div id="chart-container"></div> -->
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <button class="button">Click to Animate Lines</button>
-            <div id="line"></div>
+            <!-- <button class="button">Click to Animate Lines</button> -->
+            <h2 id="line">Racing Lines</h2>
           </div>
         </div>
       </div>
@@ -91,7 +83,9 @@
     <script src="https://fastly.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>  
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='js/ignore_appv1est.js') }}"></script> -->
+    
 </body>
 <footer>
     <section class="footerContainer">

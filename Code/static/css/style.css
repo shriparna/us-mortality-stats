@@ -33,6 +33,15 @@ h3 {
     font-size: 30px;
 }
 
+h4 {
+    color: #ffffff;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    transform: translate(0%, -20%);
+}
+
 p {
     color: #acacac;
     font-family: 'Poppins', sans-serif;
@@ -209,7 +218,7 @@ overflow: hidden;
     top: 50%;
     left: 50%;
     margin-right: -50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -30%);
     color: rgb(255, 255, 255);
     transition-duration: 0.4s;
     padding: 4px 32px;
