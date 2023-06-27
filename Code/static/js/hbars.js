@@ -1,8 +1,11 @@
 export {drawEbars}
 
+// Draw Horizontal Bar Chart
+// where Y-axis is Cause of Death
+// and X-axis is Death Rate
 function drawEbars()
 {
-  // Get values from dropdowns
+  // Get State and Year from dropdowns
   let state = d3.select("#selDataset").node().value
   let year = d3.select("#selYear").node().value
 

@@ -1,5 +1,9 @@
 export {drawLine}
 
+// Draw Racing Lines Chart
+// where Y-axis is the Death Rate
+// and X-axis is the Year
+// and each line is a different cause of death
 function drawLine()
 {
   var dom = document.getElementById('line');

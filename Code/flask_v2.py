@@ -16,7 +16,7 @@ def get_from_mongo():
 app = Flask(__name__)
 
 #################################################
-# Render HTML
+# Render HTML and pass dropdown data
 #################################################
 @app.route("/")
 def page():
@@ -28,7 +28,10 @@ def page():
               "State":"Alabama"}
     result2 = list(get_from_mongo().find(query2).sort("Year",-1))
     
+    # List of States for States dropdown
     states = [x["State"] for x in result]
+
+    # List of Years for Years dropdown
     years = [x["Year"] for x in result2]
 
     data1 = [states,years]
@@ -36,7 +39,7 @@ def page():
     return render_template("index.html",data=data1)
 
 #################################################
-# Box Plot endpoint
+# Box Plot data endpoint
 #################################################
 @app.route("/api/v1.0/boxplot")
 def boxplot():
@@ -47,6 +50,7 @@ def boxplot():
               "State":1,
               "Year":1}
     result = get_from_mongo().find(query,fields).sort("Year",1)
+
     keys = list(result[0].keys())
     keys.reverse()
     main_list = []
@@ -57,10 +61,11 @@ def boxplot():
         temp_list.append(x["State"])
         temp_list.append(x["Year"])
         main_list.append(temp_list)
+
     return dumps(main_list)
 
 #################################################
-# Racing Lines endpoint
+# Racing Lines data endpoint
 #################################################
 @app.route("/api/v1.0/racing")
 def racing_lines():
@@ -71,6 +76,7 @@ def racing_lines():
               "Cause Name":1,
               "Year":1}
     result = get_from_mongo().find(query,fields).sort("Year",1)
+
     keys = list(result[0].keys())
     keys.reverse()
     main_list = []
@@ -81,6 +87,7 @@ def racing_lines():
         temp_list.append(x["Cause Name"])
         temp_list.append(x["Year"])
         main_list.append(temp_list)
+
     return dumps(main_list)
 
 #################################################
@@ -94,6 +101,7 @@ def us_json():
     query = {}
     fields = {"_id":0}
     result = states.find_one(query,fields)
+
     return dumps(result)
 
 #################################################
@@ -106,39 +114,8 @@ def map_data(year):
                        "State":{"$not":{"$in":["United States"]}}}}
     alias = { "$project": {"_id": 0,"value": "$Age-adjusted Death Rate","name":"$State"}}
     result = list(get_from_mongo().aggregate([match,alias]))
+
     return dumps(result)
-
-#################################################
-# State data endpoint
-#################################################
-@app.route("/api/v1.0/<state>")
-def get_state(state):
-    query = {"State":state}
-    fields = {"_id":0}
-    result = list(get_from_mongo().find(query,fields))
-    return dumps(result)
-
-#################################################
-# States list endpoint
-#################################################
-@app.route("/api/v1.0/states_list")
-def geo_code():
-    query = {"Cause Name":"Unintentional injuries",
-             "Year":2017}
-    result = get_from_mongo().find(query).sort("State",1)
-    states = [x["State"] for x in result]
-    return dumps(states)
-
-#################################################
-# Years list endpoint
-#################################################
-@app.route("/api/v1.0/years_list")
-def get_years():
-    query = {"Cause Name":"Unintentional injuries",
-             "State":"Alabama"}
-    result = get_from_mongo().find(query).sort("Year",-1)
-    years = [x["Year"] for x in result]
-    return dumps(years)
 
 #################################################
 # Bar data endpoint
@@ -150,21 +127,16 @@ def get_bar_data(state,year):
              "Cause Name":{"$not":{"$in":["All causes"]}}}
     fields = {"_id":0}
     result = list(get_from_mongo().find(query,fields).sort("Age-adjusted Death Rate",1))
+    
     return dumps(result)
 
 #################################################
-# Line state endpoint
+# Bonus endpoint
 #################################################
-@app.route("/api/v1.0/line/<state>")
-def get_line_state(state):
-    query = {"Cause Name":"All causes",
-             "State":state}
-    fields = {"_id":0,
-              "Year":1,
-              "State":1,
-              "Age-adjusted Death Rate":1}
-    result = get_from_mongo().find(query,fields).sort("Year",1)
-    return dumps(result)
+@app.route("/api/v1.0/thematrix")
+def matrix():
+
+    return render_template("bonus.html")
 
 # Debug mode
 if __name__ == "__main__":

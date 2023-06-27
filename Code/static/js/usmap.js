@@ -1,5 +1,8 @@
 export {drawMap}
 
+// Draw USA Choropleth Map
+// and populate each state
+// with Death Rate value
 function drawMap()
 {
   // Get Year from dropdown
