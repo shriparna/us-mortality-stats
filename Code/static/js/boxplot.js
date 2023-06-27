@@ -1,5 +1,8 @@
 export {drawBoxPlot}
 
+// Draw Box Plot
+// Where Y-axis has all the states
+// and X-axis is the distribution of annual death rates
 function drawBoxPlot()
 {
   var dom = document.getElementById('box-plot');
@@ -10,6 +13,7 @@ function drawBoxPlot()
   var app = {};
   var option;
 
+  // Navigate to Flask endpoint, get and transform data, and draw the box plot
   $.when(
     $.getJSON('/api/v1.0/boxplot'),
     $.getScript(
