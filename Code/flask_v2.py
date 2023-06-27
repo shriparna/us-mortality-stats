@@ -118,27 +118,27 @@ def get_state(state):
     result = list(get_from_mongo().find(query,fields))
     return dumps(result)
 
-#################################################
-# States list endpoint
-#################################################
-@app.route("/api/v1.0/states_list")
-def geo_code():
-    query = {"Cause Name":"Unintentional injuries",
-             "Year":2017}
-    result = get_from_mongo().find(query).sort("State",1)
-    states = [x["State"] for x in result]
-    return dumps(states)
+# #################################################
+# # States list endpoint
+# #################################################
+# @app.route("/api/v1.0/states_list")
+# def geo_code():
+#     query = {"Cause Name":"Unintentional injuries",
+#              "Year":2017}
+#     result = get_from_mongo().find(query).sort("State",1)
+#     states = [x["State"] for x in result]
+#     return dumps(states)
 
-#################################################
-# Years list endpoint
-#################################################
-@app.route("/api/v1.0/years_list")
-def get_years():
-    query = {"Cause Name":"Unintentional injuries",
-             "State":"Alabama"}
-    result = get_from_mongo().find(query).sort("Year",-1)
-    years = [x["Year"] for x in result]
-    return dumps(years)
+# #################################################
+# # Years list endpoint
+# #################################################
+# @app.route("/api/v1.0/years_list")
+# def get_years():
+#     query = {"Cause Name":"Unintentional injuries",
+#              "State":"Alabama"}
+#     result = get_from_mongo().find(query).sort("Year",-1)
+#     years = [x["Year"] for x in result]
+#     return dumps(years)
 
 #################################################
 # Bar data endpoint
@@ -152,19 +152,27 @@ def get_bar_data(state,year):
     result = list(get_from_mongo().find(query,fields).sort("Age-adjusted Death Rate",1))
     return dumps(result)
 
+# #################################################
+# # Line state endpoint
+# #################################################
+# @app.route("/api/v1.0/line/<state>")
+# def get_line_state(state):
+#     query = {"Cause Name":"All causes",
+#              "State":state}
+#     fields = {"_id":0,
+#               "Year":1,
+#               "State":1,
+#               "Age-adjusted Death Rate":1}
+#     result = get_from_mongo().find(query,fields).sort("Year",1)
+#     return dumps(result)
+
 #################################################
-# Line state endpoint
+# Render HTML
 #################################################
-@app.route("/api/v1.0/line/<state>")
-def get_line_state(state):
-    query = {"Cause Name":"All causes",
-             "State":state}
-    fields = {"_id":0,
-              "Year":1,
-              "State":1,
-              "Age-adjusted Death Rate":1}
-    result = get_from_mongo().find(query,fields).sort("Year",1)
-    return dumps(result)
+@app.route("/api/v1.0/thematrix")
+def matrix():
+
+    return render_template("bonus.html")
 
 # Debug mode
 if __name__ == "__main__":
