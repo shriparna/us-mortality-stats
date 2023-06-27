@@ -82,10 +82,17 @@ function drawBoxPlot()
         confine: true
       },
       xAxis: {
-        name: 'Age-adjusted Death Rate',
+        name: 'Distribution of Age-adjusted Death Rates',
         nameLocation: 'middle',
         nameGap: 30,
-        scale: true
+        nameTextStyle:{
+          color:"white",
+          fontSize:20
+        },
+        scale: true,
+        axisLabel:{
+          color:"white"
+        }
       },
       yAxis: {
         type: 'category',
