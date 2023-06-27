@@ -16,18 +16,24 @@ def get_from_mongo():
 app = Flask(__name__)
 
 #################################################
-# Root endpoint
+# Render HTML
 #################################################
 @app.route("/")
-def welcome():
-    """List all available routes."""
-    return(f"Welcome to the Home Page, Traveler!<br/>"
-           f"-----------------------------------<br/>"
-           f"States: /api/v1.0/state<br/>"
-           f"HMTL: /api/v1.0/index/<br/>"
-           f"Data: /api/v1.0/states_list<br/>"
-           f"Years: /api/v1.0/years_list<br/>"
-           f"Bar Data: /api/v1.0/bar_data/state/year")
+def page():
+    query = {"Cause Name":"Unintentional injuries",
+             "Year":2017}
+    result = list(get_from_mongo().find(query).sort("State",1))
+
+    query2 = {"Cause Name":"Unintentional injuries",
+              "State":"Alabama"}
+    result2 = list(get_from_mongo().find(query2).sort("Year",-1))
+    
+    states = [x["State"] for x in result]
+    years = [x["Year"] for x in result2]
+
+    data1 = [states,years]
+
+    return render_template("index.html",data=data1)
 
 #################################################
 # Box Plot endpoint
@@ -95,16 +101,10 @@ def us_json():
 #################################################
 @app.route("/api/v1.0/mapdata/<year>")
 def map_data(year):
-<<<<<<< HEAD
-    # result = list(get_from_mongo().find(query,fields))
-    match = {"$match":{"Cause Name":"All causes","Year":int(year),"State":{"$not":{"$in":["United States"]}}}}
-    alias = { "$project": {"_id": 0,"value": "$Deaths","name":"$State"}}
-=======
     match = {"$match":{"Cause Name":"All causes",
                        "Year":int(year),
                        "State":{"$not":{"$in":["United States"]}}}}
     alias = { "$project": {"_id": 0,"value": "$Age-adjusted Death Rate","name":"$State"}}
->>>>>>> origin/main
     result = list(get_from_mongo().aggregate([match,alias]))
     return dumps(result)
 
@@ -117,33 +117,6 @@ def get_state(state):
     fields = {"_id":0}
     result = list(get_from_mongo().find(query,fields))
     return dumps(result)
-<<<<<<< HEAD
-    # result = list(get_from_mongo().find(query))
-    # return json.loads(dumps(result))
-    # return current_app.response_class(dumps(result),mimetype="application/json")
-    # return dumps(mortality.find(query))
-=======
->>>>>>> origin/main
-
-#################################################
-# Render HTML
-#################################################
-@app.route("/api/v1.0/index/")
-def page():
-    query = {"Cause Name":"Unintentional injuries",
-             "Year":2017}
-    result = list(get_from_mongo().find(query).sort("State",1))
-
-    query2 = {"Cause Name":"Unintentional injuries",
-              "State":"Alabama"}
-    result2 = list(get_from_mongo().find(query2).sort("Year",-1))
-    
-    states = [x["State"] for x in result]
-    years = [x["Year"] for x in result2]
-
-    data1 = [states,years]
-
-    return render_template("index.html",data=data1)
 
 #################################################
 # States list endpoint
@@ -154,11 +127,7 @@ def geo_code():
              "Year":2017}
     result = get_from_mongo().find(query).sort("State",1)
     states = [x["State"] for x in result]
-<<<<<<< HEAD
-    return dumps(result)
-=======
     return dumps(states)
->>>>>>> origin/main
 
 #################################################
 # Years list endpoint
@@ -169,11 +138,7 @@ def get_years():
              "State":"Alabama"}
     result = get_from_mongo().find(query).sort("Year",-1)
     years = [x["Year"] for x in result]
-<<<<<<< HEAD
-    return dumps(result)
-=======
     return dumps(years)
->>>>>>> origin/main
 
 #################################################
 # Bar data endpoint

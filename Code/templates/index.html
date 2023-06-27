@@ -12,46 +12,50 @@
 <body>
     <div class="topnav">
       <a href="#home">Home</a>
-      <a href="#myDiv">Map</a>
-      <a href="#graphs">Graphs</a>
+      <a href="#chartHead">Charts</a>
+      <a href="#box-plot">Box Plot</a>
+      <a href="#line">Racing Lines</a>
       <a href="#aboutus">About Us</a>
       <a href="#sources">Sources</a>
     </div>
     <div class="headerContainer" id="home">
       <h1>United States Mortality Rates</h1>
-      <h3>What are the deadliest diseases of your state?</h3>
+      <h3>How does your state compare?</h3>
     </div>
-    <h2>Map</h2>
-    <div id='myDiv'><!-- Choropleth --></div>
+    <h2 id="chartHead">Charts</h2>
+    <h4>Use the Dropdowns to interact with the charts</h4>
+    <div class="dropdown">
+      <select id="selYear">
+        {% for x in data[1] %}
+        <option value="{{ x }}">{{ x }}</option>
+        {% endfor %}
+      </select>
+      <select id="selDataset">
+        {% for x in data[0] %}
+        <option value="{{ x }}">{{ x }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="container">
+      <div class="box">
+        <div class="box-row">
+          <div id='myDiv' class="box-cell box1"><!-- Choropleth --></div>
+          <div id="myDiv2" class="box-cell box2"></div>
+       </div>
+      </div>
+    </div>
     <div class="container">
         <div class="row">
-          <div class="col-md-12 jumbotron text-center">
-            <h2 id="graphs">Graphs</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-2">
-            <div class="well">
-              <h5>Pick a State and Year to view the age-adjusted death rate by Causes</h5>
-              <select id="selDataset" onchange="optionChanged(this.value)">
-                {% for x in data[0] %}
-                <option value="{{ x }}">{{ x }}</option>
-                {% endfor %}
-              </select>
-              <select id="selYear" onchange="yearChanged(this.value)">
-                {% for x in data[1] %}
-                <option value="{{ x }}">{{ x }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
           <div class="col-md-5">
-            <div id="chart-container"></div>
+            <h2 id="box-plot">Box Plot</h2>
+            <!-- <div id="bar-race"></div> -->
+            <!-- <div id="chart-container"></div> -->
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div id="line"></div>
+            <!-- <button class="button">Click to Animate Lines</button> -->
+            <h2 id="line">Racing Lines</h2>
           </div>
         </div>
       </div>
@@ -79,13 +83,15 @@
     <script src="https://fastly.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>  
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='js/ignore_appv1est.js') }}"></script> -->
+    
 </body>
-<!-- <footer>
+<footer>
     <section class="footerContainer">
-        <img src="../images/ucb_logo.PNG">
+        <!-- <img src="../images/ucb_logo.PNG">
         <img src="../images/edx_logo.PNG">
-        <img src="../images/cdc_logo.PNG">
+        <img src="../images/cdc_logo.PNG"> -->
     </section>
-</footer> -->
+</footer>
 </html>

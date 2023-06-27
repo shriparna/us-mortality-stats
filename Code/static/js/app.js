@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function optionChanged(state)
 {
   drawEbars()
@@ -103,8 +104,16 @@ function drawEbars()
   window.addEventListener('resize', myChart.resize)
   })
 }
+=======
+import { drawMap } from "./usmap.js"
+import { drawEbars } from "./hbars.js"
+import { drawBoxPlot } from "./boxplot.js"
+import { drawLine } from "./lines.js"
+>>>>>>> origin/main
 
+drawMap()
 drawEbars()
+<<<<<<< HEAD
 
 
 function drawEMap()
@@ -341,6 +350,16 @@ function drawLine()
   
   Plotly.newPlot('line', data1);
 })}
+=======
+drawBoxPlot()
+>>>>>>> origin/main
 drawLine()
 
-d3.json("/api/v1.0/line").then(data=>console.log(data))
+$("#selYear").on("change", function(){
+    drawMap()
+    drawEbars()
+})
+
+$("#selDataset").on("change", function(){
+    drawEbars()
+})
